@@ -1,6 +1,6 @@
 
 import "./home.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 
@@ -10,7 +10,6 @@ function Home() {
 
   useEffect(() => {
     const animation = animate(count, 100, { duration: 3 });
-
     return animation.stop;
   }, []);
 
