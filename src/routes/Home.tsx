@@ -1,5 +1,5 @@
 
-import "./home.css";
+import "./Home.css";
 import { useEffect } from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
