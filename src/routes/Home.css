@@ -1,11 +1,21 @@
-.home_container{
+.app_container{
+  background-color: #1D1B1B;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
-  background-color: white;
 }
+
+.home_container{  
+  background-color: white;
+  position: relative;
+  z-index: 2;
+}
+
 .home {
   width: 100vw;
   height: 100vh;
-  background-image: url('./assets/moonrise.png');
+  z-index: 2;
+  background-image: url('../assets/moonrise.png');
   /* background-image: linear-gradient(
     to left top,
     #000000,
@@ -16,7 +26,10 @@
   ); */
   background-position: 40% 20%;
   background-size: 120% 120%;
-  border-radius: 15px;
-
+  border-radius: 15px; 
 }
 
+.timer{
+  position: absolute;
+  z-index: 0;
+}
