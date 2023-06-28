@@ -3,6 +3,7 @@ import {
   useMotionValue,
   useTransform,
   animate,
+  cubicBezier
 } from "framer-motion";
 import { useEffect } from "react";
 
@@ -13,7 +14,7 @@ export default function Timer({ timerduration }: { timerduration: number }) {
   useEffect(() => {
     const animation = animate(count, 100, {
       duration: timerduration,
-      ease: 'easeOut',
+      ease: cubicBezier(0.81, -0.03, 0, 1.08),
     });
     return animation.stop;
   }, []);

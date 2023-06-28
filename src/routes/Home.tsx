@@ -5,7 +5,7 @@ import HomePage from "../components/HomePage";
 
 function Home() {
 
-  const timerduration = 1;
+  const timerduration = 5;
   
   return (
     <motion.div className="app_container">

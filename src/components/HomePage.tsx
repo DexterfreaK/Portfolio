@@ -1,5 +1,6 @@
-import { motion , cubicBezier} from "framer-motion";
+import { motion, cubicBezier } from "framer-motion";
 import Navbar from "./Navbar";
+import AuthorHeading from "./AuthorHeading";
 
 export default function HomePage({ timerduration }: { timerduration: number }) {
   return (
@@ -31,7 +32,9 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           delay: timerduration,
           ease: cubicBezier(0.19, 1, 0.22, 1),
         }}
-      ></motion.div>
+      >
+        <AuthorHeading />
+      </motion.div>
       <Navbar />
     </motion.div>
   );

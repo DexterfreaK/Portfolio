@@ -1,11 +1,11 @@
-.app_container{
-  background-color: #1D1B1B;
+.app_container {
+  background-color: #1d1b1b;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
 }
 
-.home_container{  
+.home_container {
   background-color: white;
   position: relative;
   z-index: 2;
@@ -15,21 +15,22 @@
   width: 100vw;
   height: 100vh;
   z-index: 2;
-  background-image: url('../assets/moonrise.png');
-  /* background-image: linear-gradient(
-    to left top,
-    #000000,
-    #23080e,
-    #3b0911,
-    #54030e,
-    #6b0000
-  ); */
+  /* background-image: url('../assets/moonrise.png'); */
+  background-image: linear-gradient(141deg, rgba(68,165,171,1) 35%, rgba(255,153,69,1) 86%);
+
+  /* background-image: linear-gradient(45deg, hsla(0, 0%, 5%, 1) 0%, hsla(126, 82%, 33%, 1) 100%); */
+
+  /* background: radial-gradient(90% 100% at 50% 0%, #D7D7D7 0%, #000000 100%), radial-gradient(90% 100% at 50% 0%, #FF0000 0%, #000000 100%), radial-gradient(110% 215% at 100% 0%, #000AFF 0%, #70FF00 100%), linear-gradient(230deg, #7EFF41 0%, #05FF00 100%), linear-gradient(130deg, #D50000 0%, #7856FF 100%); */
+
+  /* background-image: linear-gradient(90deg, #1CB5E0 0%, #000851 100%); */
+
+  background-blend-mode: overlay, difference, difference, exclusion, normal;
   background-position: 40% 20%;
-  background-size: 120% 120%;
-  border-radius: 15px; 
+  background-size: 140% 140%;
+  border-radius: 15px;
 }
 
-.timer{
+.timer {
   position: absolute;
   z-index: 0;
 }
