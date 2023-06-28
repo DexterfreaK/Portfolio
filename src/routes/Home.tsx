@@ -1,15 +1,21 @@
-
 import "./Home.css";
 import { useEffect } from "react";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  animate,
+  cubicBezier,
+} from "framer-motion";
+import Navbar from "../components/Navbar";
 
 function Home() {
   const count = useMotionValue(0);
   const rounded = useTransform(count, Math.round);
+  const timerduration = 3;
 
   useEffect(() => {
-    const animation = animate(count, 100, { duration: 3 });
+    const animation = animate(count, 100, { duration: timerduration });
     return animation.stop;
   }, []);
 
@@ -22,28 +28,31 @@ function Home() {
           y: [1000, 0, 0],
         }}
         transition={{
-          duration: 1.5,
-          delay: 3,
+          duration: 2.5,
+          ease: cubicBezier(0.19, 1, 0.22, 1),
+          delay: timerduration,
         }}
       >
         <motion.div
           className="home"
           animate={{
-            scale: [1, 1, 0.95],
+            scale: [1, 1, 0.96],
             borderRadius: ["0px", "0px", "15px"],
             backgroundPosition: ["40% 20%", "99% 99%", "99% 40%", "40% 20%"],
           }}
           transition={{
             backgroundPosition: {
               repeat: Infinity,
-              duration: 20,
+              duration: 10,
               ease: "easeInOut",
             },
-            duration: 1.5,
-            delay: 3.5,
-            ease: "linear",
+            duration: 2,
+            delay: timerduration,
+            ease: cubicBezier(0.19, 1, 0.22, 1),
           }}
-        />
+        >
+          <Navbar />
+        </motion.div>
       </motion.div>
     </motion.div>
   );
