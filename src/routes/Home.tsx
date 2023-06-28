@@ -12,7 +12,7 @@ import Navbar from "../components/Navbar";
 function Home() {
   const count = useMotionValue(0);
   const rounded = useTransform(count, Math.round);
-  const timerduration = 3;
+  const timerduration = 0;
 
   useEffect(() => {
     const animation = animate(count, 100, { duration: timerduration });
@@ -50,9 +50,8 @@ function Home() {
             delay: timerduration,
             ease: cubicBezier(0.19, 1, 0.22, 1),
           }}
-        >
-          <Navbar />
-        </motion.div>
+        ></motion.div>
+        <Navbar />
       </motion.div>
     </motion.div>
   );
