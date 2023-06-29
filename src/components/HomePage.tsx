@@ -33,7 +33,7 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           ease: cubicBezier(0.19, 1, 0.22, 1),
         }}
       >
-        <AuthorHeading />
+        <AuthorHeading timerduration ={timerduration}/>
       </motion.div>
       <Navbar />
     </motion.div>

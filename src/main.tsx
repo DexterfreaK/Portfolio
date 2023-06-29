@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import Home from "./routes/Home";
-import Navbar from "./components/Navbar";
+import AuthorHeading from "./components/AuthorHeading";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/test",
-    element:<Navbar/>,
+    element: <AuthorHeading />,
   },
 ]);
 
