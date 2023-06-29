@@ -1,13 +1,15 @@
-import { motion } from "framer-motion";
+import { motion, cubicBezier } from "framer-motion";
 
 export default function AuthorHeading({ timerduration }: { timerduration: number}) {
   
   const addSpan = (note: String) => {
     const item = {
-      hidden: { y: 20, opacity: 0 },
+      hidden: { y: -100, opacity: 0, rotate: -20 },
       visible: {
         y: 0,
-        opacity: 1,
+        rotate: 0,
+        opacity: 0.6,
+        transition: { ease: cubicBezier(0.19, 1, 0.22, 1) }
       },
     };
 
@@ -16,8 +18,8 @@ export default function AuthorHeading({ timerduration }: { timerduration: number
         key={index}
         className={
           letter == "r" || letter == "n"
-            ? "author_child font-MonumentGroteskItalic"
-            : "author_child"
+            ? "author_child inline-block font-MonumentGroteskItalic"
+            : "author_child inline-block"
         }
         variants={item}
       >
@@ -33,7 +35,7 @@ export default function AuthorHeading({ timerduration }: { timerduration: number
       scale: 1,
       transition: {
         delayChildren: timerduration + 0.5,
-        staggerChildren: 0.2,
+        staggerChildren: 0.1,
       },
     },
   };
