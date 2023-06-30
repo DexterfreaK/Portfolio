@@ -2,7 +2,11 @@ import { motion, cubicBezier } from "framer-motion";
 import Navbar from "./Navbar";
 import AuthorHeading from "./AuthorHeading";
 
-export default function HomePage({ timerduration }: { timerduration: number }) {
+export default function HomePage({
+  timerduration,
+}: {
+  timerduration: number;
+}) {
   return (
     <motion.div
       className="home_container"
@@ -28,14 +32,14 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
             duration: 10,
             ease: "easeInOut",
           },
-          duration: 2,
+          duration: 1.5,
           delay: timerduration,
           ease: cubicBezier(0.19, 1, 0.22, 1),
         }}
       >
-        <AuthorHeading timerduration={timerduration}/>
+        <AuthorHeading timerduration={timerduration} />
       </motion.div>
-      <Navbar />
+      <Navbar timerduration={timerduration}/>
     </motion.div>
   );
 }
