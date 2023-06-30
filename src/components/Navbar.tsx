@@ -28,8 +28,12 @@ export default function Navbar({
         }}
       >
         <ul className="flex text-white font-MonumentGroteskBold justify-around p-[.8vh]">
-          <li className="pb-[15px]">Home</li>
-          <li className="pb-[15px]">Work</li>
+          <li className="pb-[15px]">
+            <a href="\">Home</a>
+          </li>
+          <li className="pb-[15px]">
+            <a href="\work">Work</a>
+          </li>
           <li className="pb-[15px]">About</li>
         </ul>
         <motion.div

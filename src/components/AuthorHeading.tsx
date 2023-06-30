@@ -2,8 +2,12 @@ import { motion, cubicBezier } from "framer-motion";
 
 export default function AuthorHeading({
   timerduration,
+  textcolorWhite,
+  title,
 }: {
   timerduration: number;
+  textcolorWhite?: boolean;
+  title: Array<string>;
 }) {
   const addSpan = (note: String) => {
     const container = {
@@ -19,7 +23,7 @@ export default function AuthorHeading({
     };
 
     const item = {
-      hidden: { y: "-5vh", opacity: 0, rotate: -15, translateZ:'-10vh' },
+      hidden: { y: "-5vh", opacity: 0, rotate: -15, translateZ: "-10vh" },
       visible: {
         y: 0,
         translateZ: 0,
@@ -41,7 +45,7 @@ export default function AuthorHeading({
           <motion.span
             key={index}
             className={
-              letter == "r" || letter == "n"
+              letter == "r" || letter == "n" || letter == 'w' || letter=='p'
                 ? "author_child font-MonumentGroteskItalic inline-block"
                 : "author_child inline-block"
             }
@@ -55,16 +59,21 @@ export default function AuthorHeading({
   };
 
   return (
-    <motion.div className="flex h-full w-full items-center justify-center flex-col pb-[10vw] uppercase text-center text-white">
+    <motion.div
+      className="flex h-full w-full items-center justify-center flex-col pb-[10vw] uppercase text-center text-white"
+      style={{ color: textcolorWhite ? "white" : "black" }}
+    >
       <motion.div
-        className="pb-[7vw] font-MonumentGroteskRegular text-[10vw] leading-[4vw] "
+        className="pb-[7vw] font-MonumentGroteskRegular text-[12vw] leading-[4.5vw] "
         transition={{
           staggerChildren: 1,
         }}
       >
-        {addSpan("harshit")}
-        <br />
-        {addSpan("nagpal")}
+        {title.map((word, index) => (
+          <div key={index}>
+            {addSpan(word)} <br />
+          </div>
+        ))}
       </motion.div>
       <motion.div className=" text-[.8vw] leading-[1.5vw] whitespace-normal w-[30vw]">
         Website under Contruction. Website under Contruction. Website under

@@ -37,7 +37,7 @@ export default function HomePage({
           ease: cubicBezier(0.19, 1, 0.22, 1),
         }}
       >
-        <AuthorHeading timerduration={timerduration} />
+        <AuthorHeading timerduration={timerduration} title={['harshit','nagpal']} textcolorWhite/>
       </motion.div>
       <Navbar timerduration={timerduration}/>
     </motion.div>
