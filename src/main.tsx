@@ -3,17 +3,17 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import Home from "./routes/Home";;
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Navbar from "./components/Navbar";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
   },
-  {
-    path: "/test",
-    element: <Navbar/>,
-  },
+  // {
+  //   path: "/test",
+  //   element: <Navbar />,
+  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
