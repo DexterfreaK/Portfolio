@@ -2,6 +2,7 @@ import {
   cubicBezier,
   motion
 } from "framer-motion";
+import { Link } from "react-router-dom";
 
 
 export default function Navbar({
@@ -29,10 +30,10 @@ export default function Navbar({
       >
         <ul className="flex text-white font-MonumentGroteskBold justify-around p-[.8vh]">
           <li className="pb-[15px]">
-            <a href="\">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li className="pb-[15px]">
-            <a href="\work">Work</a>
+            <Link to="/work">Work</Link>
           </li>
           <li className="pb-[15px]">About</li>
         </ul>

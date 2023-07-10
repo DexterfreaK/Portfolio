@@ -4,10 +4,12 @@ export default function AuthorHeading({
   timerduration,
   textcolorWhite,
   title,
+  NoAnimation,
 }: {
   timerduration: number;
   textcolorWhite?: boolean;
   title: Array<string>;
+  NoAnimation?: boolean;
 }) {
   const addSpan = (note: String) => {
     const container = {
@@ -36,7 +38,7 @@ export default function AuthorHeading({
     return (
       <motion.div
         className="author_container"
-        variants={container}
+        variants={NoAnimation ? {} : container}
         initial="hidden"
         animate="visible"
         style={{ perspective: "400px" }}
@@ -45,11 +47,11 @@ export default function AuthorHeading({
           <motion.span
             key={index}
             className={
-              letter == "r" || letter == "n" || letter == 'w' || letter=='p'
+              letter == "r" || letter == "n" || letter == "w" || letter == "p"
                 ? "author_child font-MonumentGroteskItalic inline-block"
                 : "author_child inline-block"
             }
-            variants={item}
+            variants={NoAnimation ? {} : item}
           >
             {letter}
           </motion.span>

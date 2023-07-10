@@ -2,14 +2,15 @@ import { motion, cubicBezier } from "framer-motion";
 import Navbar from "./Navbar";
 import AuthorHeading from "./AuthorHeading";
 
-export default function HomePage({
-  timerduration,
-}: {
-  timerduration: number;
-}) {
+export default function HomePage({ timerduration }: { timerduration: number }) {
+
+
   return (
+
     <motion.div
       className="home_container"
+      
+     
       animate={{
         y: [1000, 0, 0],
       }}
@@ -37,9 +38,13 @@ export default function HomePage({
           ease: cubicBezier(0.19, 1, 0.22, 1),
         }}
       >
-        <AuthorHeading timerduration={timerduration} title={['harshit','nagpal']} textcolorWhite/>
+        <AuthorHeading
+          timerduration={timerduration}
+          title={["harshit", "nagpal"]}
+          textcolorWhite
+        />
       </motion.div>
-      <Navbar timerduration={timerduration}/>
+      <Navbar timerduration={timerduration} />
     </motion.div>
   );
 }

@@ -4,9 +4,12 @@ import Timer from "../components/Timer";
 import HomePage from "../components/HomePage";
 
 function Home() {
-
   const timerduration = 5;
-  
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   window.addEventListener("scroll", () => navigate("/work"), false);
+  // }, []);
+
   return (
     <motion.div className="app_container">
       <Timer timerduration={timerduration} />
