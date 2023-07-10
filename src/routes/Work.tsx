@@ -27,18 +27,18 @@ function Work() {
   return (
     <motion.div>
       <motion.div
-        initial={{ filter: "brightness(100%)" }}
-        animate={{ filter: "brightness(50%)" }}
+        initial={{ filter: "brightness(100%)", scale: 1 }}
+        animate={{ filter: "brightness(50%)", scale: 0.97 }}
+        transition={{ duration: 0.5, ease: cubicBezier(0.19, 1, 0.22, 1) }}
       >
         <Home_prev />
       </motion.div>
       <motion.div
-        className="bg-[#F4F0F0] rounded-3xl z-50 absolute"
+        className="bg-[#F4F0F0] rounded-[50px] z-50 absolute w-[100svw]"
         initial={{ opacity: 1, y: 2000 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 2.5, ease: cubicBezier(0.19, 1, 0.22, 1) }}
+        animate={{ opacity: 1, y: -50 }}
+        transition={{ duration: 3, ease: cubicBezier(0.19, 1, 0.22, 1) }}
       >
-        <Navbar timerduration={0} />
         <SmoothScroll>
           <motion.div className="">
             <motion.div className="h-almost-screen max-h-[50rem] pt-[10vw]">
@@ -48,6 +48,7 @@ function Work() {
           </motion.div>
         </SmoothScroll>
       </motion.div>
+      <Navbar timerduration={0} />
     </motion.div>
   );
 }
