@@ -66,7 +66,7 @@ export default function AuthorHeading({
       style={{ color: textcolorWhite ? "white" : "black" }}
     >
       <motion.div
-        className="pb-[7vw] font-MonumentGroteskRegular text-[12vw] leading-[4.5vw] "
+        className="font-MonumentGroteskRegular text-[12vw] leading-[4.5vw] "
         transition={{
           staggerChildren: 1,
         }}

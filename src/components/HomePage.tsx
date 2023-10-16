@@ -6,13 +6,10 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
 
 
   return (
-
     <motion.div
       className="home_container"
-      
-     
       animate={{
-        y: [1000, 0, 0],
+        y: [10000, 0, 0],
       }}
       transition={{
         duration: 2.5,
@@ -30,7 +27,7 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
         transition={{
           backgroundPosition: {
             repeat: Infinity,
-            duration: 10,
+            duration: 100,
             ease: "easeInOut",
           },
           duration: 1.5,

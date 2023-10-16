@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'Monument Grotesk Bold';
-  src: url('./assets/font/MonumentGrotesk-Bold.ttf');
+  src: url('./assets/font/MonumentGrotesk-Bold.woff2');
 }
 
 @font-face {
@@ -14,7 +14,7 @@
 
 @font-face {
   font-family: 'Monument Grotesk Italic';
-  src: url('./assets/font/MonumentGrotesk-Italic.ttf');
+  src: url('./assets/font/MonumentGrotesk-Italic.woff2');
 }
 
 @font-face {
@@ -31,7 +31,7 @@
 }
 @font-face {
   font-family: 'Monument Grotesk Regular';
-  src: url('./assets/font/MonumentGrotesk-Regular.ttf');
+  src: url('./assets/font/MonumentGrotesk-Regular.woff2');
 }
 @font-face {
   font-family: 'Monument Grotesk Semi Mono';

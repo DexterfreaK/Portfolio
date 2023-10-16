@@ -1,15 +1,17 @@
-import {
-  cubicBezier,
-  motion
-} from "framer-motion";
+import { cubicBezier, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
+function NavbarOption({ title }: { title: string }) {
+  return (
+    <li className="flex-1 grid place-items-center">
+      <Link className="px-[18px]" to={"/" + title}>
+        {title.charAt(0).toUpperCase() + title.slice(1)}
+      </Link>
+    </li>
+  );
+}
 
-export default function Navbar({
-  timerduration,
-}: {
-  timerduration: number;
-}) {
+export default function Navbar({ timerduration }: { timerduration: number }) {
   return (
     <header className="fixed bottom-[3rem] z-[1000] w-[100%] flex justify-center">
       <motion.div
@@ -28,14 +30,10 @@ export default function Navbar({
           duration: 1,
         }}
       >
-        <ul className="flex text-white font-MonumentGroteskBold justify-around p-[.8vh]">
-          <li className="pb-[15px]">
-            <Link to="/">Home</Link>
-          </li>
-          <li className="pb-[15px]">
-            <Link to="/work">Work</Link>
-          </li>
-          <li className="pb-[15px]">About</li>
+        <ul className="flex text-white font-MonumentGroteskBold h-[55px]">
+          <NavbarOption title="home" />
+          <NavbarOption title="work" />
+          <NavbarOption title="about" />
         </ul>
         <motion.div
           className="absolute left-0 bottom-1/4 w-full h-[3px] bg-white origin-left rounded-full js-menu-line"

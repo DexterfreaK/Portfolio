@@ -12,6 +12,10 @@ export default function App() {
       element: <Home />,
     },
     {
+      path: "/home",
+      element: <Home />,
+    },
+    {
       path: "/work",
       element: <Work />,
     },
