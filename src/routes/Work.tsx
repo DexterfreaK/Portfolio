@@ -8,7 +8,6 @@ import {
   WorkImage,
   gridProperty,
   layoutMain,
-  layoutImage,
 } from "../components/WorkImage";
 
 import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
