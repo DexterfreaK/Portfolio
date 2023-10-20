@@ -4,7 +4,7 @@ import Timer from "../components/Timer";
 import HomePage from "../components/HomePage";
 
 function Home() {
-  const timerduration = 0;
+  const timerduration = 3;
   // const navigate = useNavigate();
   // useEffect(() => {
   //   window.addEventListener("scroll", () => navigate("/work"), false);

@@ -4,6 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { useLocation, useRoutes } from "react-router-dom";
 import Home from "./routes/Home";
 import Work from "./routes/Work";
+import About from "./routes/About";
 
 export default function App() {
   const element = useRoutes([
@@ -18,6 +19,10 @@ export default function App() {
     {
       path: "/work",
       element: <Work />,
+    },
+    {
+      path: "/about",
+      element: <About />,
     },
   ]);
 

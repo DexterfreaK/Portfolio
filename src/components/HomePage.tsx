@@ -1,8 +1,15 @@
 import { motion, cubicBezier } from "framer-motion";
-import Navbar from "./Navbar";
+
 import AuthorHeading from "./AuthorHeading";
+import { useScroll, useMotionValueEvent } from "framer-motion";
+import { easeIn } from "framer-motion/dom";
 
 export default function HomePage({ timerduration }: { timerduration: number }) {
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    console.log("Page scroll: ", latest);
+  });
 
 
   return (
@@ -12,9 +19,9 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
         y: [10000, 0, 0],
       }}
       transition={{
-        duration: 2.5,
+        duration: 3,
         ease: cubicBezier(0.19, 1, 0.22, 1),
-        delay: timerduration,
+        delay: timerduration-.5,
       }}
     >
       <motion.div
@@ -30,9 +37,9 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
             duration: 100,
             ease: "easeInOut",
           },
-          duration: 1.5,
+          duration: 2,
           delay: timerduration,
-          ease: cubicBezier(0.19, 1, 0.22, 1),
+          ease: cubicBezier(.17,.67,.32,.86),
         }}
       >
         <AuthorHeading
@@ -41,7 +48,6 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           textcolorWhite
         />
       </motion.div>
-      <Navbar timerduration={timerduration} />
     </motion.div>
   );
 }
