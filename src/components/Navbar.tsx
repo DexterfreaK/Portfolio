@@ -55,7 +55,7 @@ export default function Navbar({
           duration: 1,
         }}
       >
-        <ul className="flex text-white font-MonumentGroteskBold text-[14px] h-[45px]">
+        <ul className="flex text-white font-MonumentGroteskBold text-[14px] h-[45px] overflow-hidden">
           <NavbarOption title="home" state={NavbarState.Home} />
           <NavbarOption title="work" state={NavbarState.Work} />
           <NavbarOption title="about" state={NavbarState.About} />

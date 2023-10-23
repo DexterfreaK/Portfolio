@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import CursorViewProject from "./CursorViewProject";
 export interface gridProperty {
   main: layoutMain;
 }
@@ -87,31 +87,35 @@ function WorkImageSection({ props }: { props: eachWorkImageProps }) {
   return (
     <motion.article
       className={
-        "relative font-MonumentGroteskMedium text-white " + props.gridFormat
+        "relative font-MonumentGroteskMedium text-white object-fill " +
+        props.gridFormat
       }
     >
       <img
-        className="object-contain rounded-[1rem] hover:rounded-[0rem] hover:brightness-75 transition-all duration-250 ease-in-out w-[100vw]"
+        className="rounded-[1rem]"
         src={props.image}
-        alt="InterBits Landing Page"
+        alt={props.title}
       />
+      {/* <CursorViewProject /> */}
       <motion.div
-        className=" absolute top-0 w-full h-full opacity-0"
+        className="absolute top-0 w-full h-full opacity-0 bg-black rounded-[1rem]"
         whileHover={{
-          opacity: 1,
+          opacity: .75,
           transition: {
-            duration: 1,
+            duration: 0.5,
           },
         }}
       >
-        <motion.div className="absolute bottom-0 w-[100%] text-center p-[3vw] text-[3vw]">
-          {props.title}
-        </motion.div>
-        <motion.div className="absolute top-0 w-[100%] flex justify-between py-[1vh] text-[1vw]">
-          <motion.div></motion.div>
-          <motion.div className="flex">
-            {props.year}
-            <motion.div className="h-[1vw] w-[1vw] bg-white rounded-full m-[.6vw]" />
+        <motion.div className="opacity-100">
+          <motion.div className="absolute bottom-[30px] w-[100%] text-center p-[3vw] text-[3vw]">
+            {props.title}
+          </motion.div>
+          <motion.div className="absolute top-0 w-[100%] flex justify-between py-[1vh] text-[1vw]">
+            <motion.div className="_"></motion.div>
+            <motion.div className="flex mt-[10px] mr-[20px]">
+              {props.year}
+              <motion.div className="h-[1vw] w-[1vw] bg-white rounded-full m-[.6vw]" />
+            </motion.div>
           </motion.div>
         </motion.div>
       </motion.div>

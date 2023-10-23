@@ -4,6 +4,7 @@ import AuthorHeading from "../components/AuthorHeading";
 
 // import SmoothScroll from "../components/SmoothScroll";
 import inter from "../assets/interbits-assets/InterbitsBG.png";
+import studydeck from "../assets/Studydeck/StudydeckMain.png";
 import {
   WorkImage,
   gridProperty,
@@ -71,9 +72,24 @@ function Work() {
             <motion.div className="h-[100svh] pt-[10vw]">
               <AuthorHeading timerduration={0} title={["recent", "work"]} />
             </motion.div>
-
-            <WorkImage image={inter} title="Inter-BITS" year="2023" number_of_images={1}/>
-            <WorkImage image={inter} title="Inter-BITS" year="2023" number_of_images={3}/>
+            <WorkImage
+              image={studydeck}
+              title="Study-Deck"
+              year="2023"
+              number_of_images={1}
+            />
+            <WorkImage
+              image={inter}
+              title="Inter-BITS"
+              year="2023"
+              number_of_images={1}
+            />
+            <WorkImage
+              image={inter}
+              title="Inter-BITS"
+              year="2023"
+              number_of_images={3}
+            />
           </motion.div>
         </motion.div>
       </motion.div>
