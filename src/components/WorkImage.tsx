@@ -1,27 +1,27 @@
 import { motion } from "framer-motion";
 import CursorViewProject from "./CursorViewProject";
-export interface gridProperty {
-  main: layoutMain;
-}
+// export interface gridProperty {
+//   main: layoutMain;
+// }
 
-export enum layoutMain {
-  fullscreen = "",
-  three = "grid-cols-3 gap-4",
-}
+// export enum layoutMain {
+//   fullscreen = "",
+//   three = "grid-cols-3 gap-4",
+// }
 
-enum fullscreen {
-  fullscreen = "",
-}
-enum three_section {
-  left_major = " col-span-2 ",
-  right_minor = " col-span-1 ",
-}
-const layoutImage = {
-  fullscreen,
-  three_section,
-};
+// enum fullscreen {
+//   fullscreen = "",
+// }
+// enum three_section {
+//   left_major = " col-span-2 ",
+//   right_minor = " col-span-1 ",
+// }
+// const layoutImage = {
+//   fullscreen,
+//   three_section,
+// };
 interface WorkImageProps {
-  image: string;
+  image: string[];
   title: string;
   year: string;
   number_of_images: number;
@@ -41,7 +41,7 @@ export function WorkImage(props: WorkImageProps) {
         <motion.article className={"grid m-[1vw]"}>
           <WorkImageSection
             props={{
-              image: props.image,
+              image: props.image[0],
               title: props.title,
               year: props.year,
             }}
@@ -53,7 +53,7 @@ export function WorkImage(props: WorkImageProps) {
         <motion.article className={"grid grid-cols-3"}>
           <WorkImageSection
             props={{
-              image: props.image,
+              image: props.image[0],
               title: props.title,
               year: props.year,
               gridFormat: "col-span-2 m-[1vw]",
@@ -62,7 +62,7 @@ export function WorkImage(props: WorkImageProps) {
           <motion.article className={"grid grid-rows-1 "}>
             <WorkImageSection
               props={{
-                image: props.image,
+                image: props.image[1],
                 title: props.title,
                 year: props.year,
                 gridFormat: "m-[1vw]",
@@ -70,7 +70,7 @@ export function WorkImage(props: WorkImageProps) {
             />
             <WorkImageSection
               props={{
-                image: props.image,
+                image: props.image[2],
                 title: props.title,
                 year: props.year,
                 gridFormat: "m-[1vw]",
@@ -103,7 +103,7 @@ function WorkImageSection({ props }: { props: eachWorkImageProps }) {
         }}
       >
         <motion.div className="opacity-100">
-          <motion.div className="absolute bottom-[30px] w-[100%] text-center p-[3vw] text-[3vw]">
+          <motion.div className="absolute bottom-[30px] w-[100%] text-center p-[3vw] text-[2.5vw]">
             {props.title}
           </motion.div>
           <motion.div className="absolute top-0 w-[100%] flex justify-between py-[1vh] text-[1vw]">

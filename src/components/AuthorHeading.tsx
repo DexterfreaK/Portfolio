@@ -4,11 +4,13 @@ export default function AuthorHeading({
   timerduration,
   textcolorWhite,
   title,
+  subparagraph,
   NoAnimation,
 }: {
   timerduration: number;
   textcolorWhite?: boolean;
   title: Array<string>;
+  subparagraph?: string;
   NoAnimation?: boolean;
 }) {
   const addSpan = (note: String) => {
@@ -78,8 +80,7 @@ export default function AuthorHeading({
         ))}
       </motion.div>
       <motion.div className=" text-[.8vw] leading-[1.5vw] whitespace-normal w-[30vw]">
-        Website under Contruction. Website under Contruction. Website under
-        Contruction.
+        {subparagraph}
       </motion.div>
     </motion.div>
   );

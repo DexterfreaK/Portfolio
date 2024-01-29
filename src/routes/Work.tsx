@@ -2,7 +2,10 @@ import { motion, cubicBezier } from "framer-motion";
 import AuthorHeading from "../components/AuthorHeading";
 import inter from "../assets/interbits-assets/InterbitsBG.png";
 import studydeck from "../assets/Studydeck/StudydeckMain.png";
-import { WorkImage, gridProperty, layoutMain } from "../components/WorkImage";
+import Main_sop from "../assets/SOP/Main.png";
+import SideA_sop from "../assets/SOP/SideA.png";
+import SideB_sop from "../assets/SOP/SideB.png";
+import { WorkImage } from "../components/WorkImage";
 import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
 import React from "react";
 import { Cursor } from "../components/cursor";
@@ -46,7 +49,6 @@ function Work() {
     if (ref.current) {
       repeatItems(ref.current, 3);
     }
-
   }, []);
 
   const repeatItems = (parentEl: HTMLElement, total = 0) => {
@@ -83,25 +85,30 @@ function Work() {
         >
           <motion.div className="">
             <motion.div className="h-[100svh] pt-[10vw]">
-              <AuthorHeading timerduration={0} title={["recent", "work"]} />
+              <AuthorHeading
+                timerduration={0}
+                title={["recent", "work"]}
+                subparagraph="A COLLECTION OF WORK, PAST AND PRESENT. SOME BUILT FOR TODAY, FOR
+        TOMORROW AND OTHERS FOR THE FUTURE."
+              />
             </motion.div>
 
             <div className="parent" ref={ref}>
               <WorkImage
-                image={studydeck}
+                image={[studydeck]}
                 title="Study-Deck"
                 year="2023"
                 number_of_images={1}
               />
               <WorkImage
-                image={inter}
+                image={[inter]}
                 title="Inter-BITS"
                 year="2023"
                 number_of_images={1}
               />
               <WorkImage
-                image={inter}
-                title="Inter-BITS"
+                image={[Main_sop, SideA_sop, SideB_sop]}
+                title="BITS Pilani Main Website"
                 year="2023"
                 number_of_images={3}
               />
