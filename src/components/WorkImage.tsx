@@ -87,20 +87,16 @@ function WorkImageSection({ props }: { props: eachWorkImageProps }) {
   return (
     <motion.article
       className={
-        "relative font-MonumentGroteskMedium text-white object-fill " +
+        "cursor-none relative font-MonumentGroteskMedium text-white object-fill " +
         props.gridFormat
       }
     >
-      <img
-        className="rounded-[1rem]"
-        src={props.image}
-        alt={props.title}
-      />
+      <img className="rounded-[1rem]" src={props.image} alt={props.title} />
       {/* <CursorViewProject /> */}
       <motion.div
         className="absolute top-0 w-full h-full opacity-0 bg-black rounded-[1rem]"
         whileHover={{
-          opacity: .75,
+          opacity: 0.55,
           transition: {
             duration: 0.5,
           },

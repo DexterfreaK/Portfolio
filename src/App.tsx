@@ -5,6 +5,7 @@ import { useLocation, useRoutes } from "react-router-dom";
 import Home from "./routes/Home";
 import Work from "./routes/Work";
 import About from "./routes/About";
+import { Cursor } from "./components/cursor";
 
 export default function App() {
   const element = useRoutes([
@@ -32,6 +33,7 @@ export default function App() {
 
   return (
     <AnimatePresence mode="wait">
+      <Cursor/>
       {React.cloneElement(element, { key: location.pathname })}
     </AnimatePresence>
   );

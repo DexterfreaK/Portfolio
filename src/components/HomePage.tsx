@@ -21,7 +21,7 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
       transition={{
         duration: 3,
         ease: cubicBezier(0.19, 1, 0.22, 1),
-        delay: timerduration-.5,
+        delay: timerduration - 0.5,
       }}
     >
       <motion.div
@@ -39,7 +39,7 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           },
           duration: 2,
           delay: timerduration,
-          ease: cubicBezier(.17,.67,.32,.86),
+          ease: cubicBezier(0.17, 0.67, 0.32, 0.86),
         }}
       >
         <AuthorHeading
@@ -48,6 +48,7 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           textcolorWhite
         />
       </motion.div>
+      
     </motion.div>
   );
 }

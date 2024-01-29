@@ -1,17 +1,11 @@
 import { motion, cubicBezier } from "framer-motion";
-
 import AuthorHeading from "../components/AuthorHeading";
-
-// import SmoothScroll from "../components/SmoothScroll";
 import inter from "../assets/interbits-assets/InterbitsBG.png";
 import studydeck from "../assets/Studydeck/StudydeckMain.png";
-import {
-  WorkImage,
-  gridProperty,
-  layoutMain,
-} from "../components/WorkImage";
-
+import { WorkImage, gridProperty, layoutMain } from "../components/WorkImage";
 import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
+import React from "react";
+import { Cursor } from "../components/cursor";
 
 const variants = {
   prev_slide_back_out: {
@@ -45,6 +39,25 @@ function Work() {
     // called every scroll
   });
 
+  const ref = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    // Ensure gridRef.current is not null before calling repeatItems
+    if (ref.current) {
+      repeatItems(ref.current, 3);
+    }
+
+  }, []);
+
+  const repeatItems = (parentEl: HTMLElement, total = 0) => {
+    const items: HTMLElement[] = [...parentEl.children] as HTMLElement[];
+
+    for (let i = 0; i <= total - 1; ++i) {
+      var cln = items[i].cloneNode(true) as HTMLElement;
+      parentEl.appendChild(cln);
+    }
+  };
+
   return (
     <ReactLenis root>
       <motion.div className="">
@@ -72,27 +85,31 @@ function Work() {
             <motion.div className="h-[100svh] pt-[10vw]">
               <AuthorHeading timerduration={0} title={["recent", "work"]} />
             </motion.div>
-            <WorkImage
-              image={studydeck}
-              title="Study-Deck"
-              year="2023"
-              number_of_images={1}
-            />
-            <WorkImage
-              image={inter}
-              title="Inter-BITS"
-              year="2023"
-              number_of_images={1}
-            />
-            <WorkImage
-              image={inter}
-              title="Inter-BITS"
-              year="2023"
-              number_of_images={3}
-            />
+
+            <div className="parent" ref={ref}>
+              <WorkImage
+                image={studydeck}
+                title="Study-Deck"
+                year="2023"
+                number_of_images={1}
+              />
+              <WorkImage
+                image={inter}
+                title="Inter-BITS"
+                year="2023"
+                number_of_images={1}
+              />
+              <WorkImage
+                image={inter}
+                title="Inter-BITS"
+                year="2023"
+                number_of_images={3}
+              />
+            </div>
           </motion.div>
         </motion.div>
       </motion.div>
+      <Cursor />
     </ReactLenis>
   );
 }

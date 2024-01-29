@@ -2,6 +2,7 @@ import "./Home.css";
 import { motion } from "framer-motion";
 import Timer from "../components/Timer";
 import HomePage from "../components/HomePage";
+import { Cursor } from "../components/cursor";
 
 function Home() {
   const timerduration = 3;
