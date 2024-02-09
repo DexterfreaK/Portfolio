@@ -6,9 +6,12 @@ import Home from "./routes/Home";
 import Work from "./routes/Work";
 import About from "./routes/About";
 import { Cursor } from "./components/cursor";
-import { Analytics } from "@vercel/analytics/react";
+import { inject } from "@vercel/analytics";
+
+
 
 export default function App() {
+  inject();
   const element = useRoutes([
     {
       path: "/",
@@ -38,7 +41,6 @@ export default function App() {
         <Cursor />
         {React.cloneElement(element, { key: location.pathname })}
       </AnimatePresence>
-      <Analytics />
     </>
   );
 }
