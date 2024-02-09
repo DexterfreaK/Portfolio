@@ -93,7 +93,7 @@ function Work() {
               />
             </motion.div>
 
-            <div className="parent" ref={ref}>
+            <div className="parent" >
               <WorkImage
                 image={[studydeck]}
                 title="Study-Deck"

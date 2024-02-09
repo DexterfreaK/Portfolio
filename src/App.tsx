@@ -6,6 +6,7 @@ import Home from "./routes/Home";
 import Work from "./routes/Work";
 import About from "./routes/About";
 import { Cursor } from "./components/cursor";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   const element = useRoutes([
@@ -32,9 +33,12 @@ export default function App() {
   if (!element) return null;
 
   return (
-    <AnimatePresence mode="wait">
-      <Cursor/>
-      {React.cloneElement(element, { key: location.pathname })}
-    </AnimatePresence>
+    <>
+      <AnimatePresence mode="wait">
+        <Cursor />
+        {React.cloneElement(element, { key: location.pathname })}
+      </AnimatePresence>
+      <Analytics />
+    </>
   );
 }
