@@ -45,7 +45,8 @@ function About() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              AWKWARD<br/>DANCER
+              SYSTEMS <br/>
+              ENTHUSIAST
             </motion.h2>
             
             <motion.p 
