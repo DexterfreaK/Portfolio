@@ -1,11 +1,82 @@
-import { motion } from "framer-motion";
+import { motion, stagger, AnimatePresence } from "framer-motion";
 import { ReactLenis } from "@studio-freight/react-lenis";
 import CursorViewProject from "../components/CursorViewProject";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function About() {
   const [isHovered, setIsHovered] = useState(false);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  
+  // Text options that will rotate
+  const textOptions = [
+    {
+      firstLine: "Systems",
+      secondLine: "Enthusiast",
+      id: "systems-enthusiast"
+    },
+    {
+      firstLine: "Typeface",
+      secondLine: "Collector",
+      id: "typeface-collector"
+    },
+    {
+      firstLine: "Movie",
+      secondLine: "Quoter",
+      id: "movie-quoter"
+    }
+  ];
+  
+  // Auto rotate text every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prevIndex) => 
+        prevIndex === textOptions.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  // Animation variants for letter-by-letter animation
+  const containerVariants = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.04,
+        delayChildren: 0.1
+      }
+    },
+    exit: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.04,
+        staggerDirection: -1
+      }
+    }
+  };
+  
+  // Letter variants - for entering and exiting
+  const letterVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0.2, 0.6, 0.3, 1]
+      }
+    },
+    exit: { 
+      opacity: 0,
+      y: -10,
+      transition: {
+        duration: 0.3,
+        ease: [0.2, 0.6, 0.3, 1]
+      }
+    }
+  };
   
   return (
     <ReactLenis root options={{ wheelMultiplier: 1.2 }}>
@@ -22,8 +93,12 @@ function About() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8 }}
               >
-                {/* Image placeholder - replace with actual image */}
-                <div className="w-full h-full bg-gray-300"></div>
+                {/* Replace placeholder with actual image */}
+                <img 
+                  src="/profile.jpg" 
+                  alt="Harshit Nagpal" 
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
             </div>
           </div>
@@ -36,18 +111,57 @@ function About() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              HARSHIT NAGPAL - EST 1995
+              HARSHIT NAGPAL - EST 2003
             </motion.p>
             
-            <motion.h2 
-              className="text-[8vw] md:text-[5vw] font-MonumentGroteskBold leading-none mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              SYSTEMS <br/>
-              ENTHUSIAST
-            </motion.h2>
+            <div className="h-[25vw] md:h-[12vw] mb-4 overflow-hidden relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={textOptions[currentTextIndex].id}
+                  className="absolute top-0 left-0 w-full text-[8vw] md:text-[5vw] font-MonumentGroteskBold leading-none"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
+                  <div className="flex flex-wrap">
+                    {textOptions[currentTextIndex].firstLine.split('').map((letter, index, array) => {
+                      if (letter === ' ') {
+                        return <span key={`first-${index}`} className="inline-block">&nbsp;</span>;
+                      }
+                      
+                      return (
+                        <motion.span 
+                          key={`first-${index}`} 
+                          className="inline-block text-black"
+                          variants={letterVariants}
+                        >
+                          {letter}
+                        </motion.span>
+                      );
+                    })}
+                  </div>
+                  
+                  <div className="flex flex-wrap mt-2">
+                    {textOptions[currentTextIndex].secondLine.split('').map((letter, index, array) => {
+                      if (letter === ' ') {
+                        return <span key={`second-${index}`} className="inline-block">&nbsp;</span>;
+                      }
+                      
+                      return (
+                        <motion.span 
+                          key={`second-${index}`} 
+                          className="inline-block text-black"
+                          variants={letterVariants}
+                        >
+                          {letter}
+                        </motion.span>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
             
             <motion.p 
               className="text-lg md:text-xl font-MonumentGrotesk mb-6"
