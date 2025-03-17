@@ -1,4 +1,4 @@
-import { motion, cubicBezier } from "framer-motion";
+import { motion, cubicBezier, AnimatePresence } from "framer-motion";
 import AuthorHeading from "../components/AuthorHeading";
 import inter from "../assets/interbits-assets/InterbitsBG.png";
 import studydeck from "../assets/Studydeck/StudydeckMain.png";
@@ -22,6 +22,161 @@ const variants = {
   },
 };
 
+// Project details panel component
+interface ProjectDetailsProps {
+  project: {
+    title: string;
+    year: string;
+    image: string[];
+    number_of_images: number;
+  } | null;
+  onClose: () => void;
+}
+
+const ProjectDetailsPanel = ({ project, onClose }: ProjectDetailsProps) => {
+  if (!project) return null;
+  
+  return (
+    <motion.div 
+      className="fixed bottom-0 left-0 right-0 z-50 bg-[#f5f0e8] text-[#3a2f2a] rounded-t-[40px] overflow-hidden flex justify-center"
+      initial={{ 
+        y: "100%", 
+        opacity: 1,
+        width: "90%",
+        left: "5%",
+        right: "5%",
+        height: "0vh",
+        borderTopLeftRadius: "100px",
+        borderTopRightRadius: "100px",
+        boxShadow: "0px -10px 50px rgba(0,0,0,0)"
+      }}
+      animate={{ 
+        y: "5%", 
+        opacity: 1,
+        width: "100%",
+        left: "0%",
+        right: "0%",
+        height: "95vh",
+        borderTopLeftRadius: "40px",
+        borderTopRightRadius: "40px",
+        boxShadow: "0px -10px 50px rgba(0,0,0,0.1)"
+      }}
+      exit={{ 
+        y: "100%", 
+        opacity: 1,
+        scale: 0.95,
+        width: "90%",
+        left: "5%",
+        right: "5%",
+        height: "50vh",
+        borderTopLeftRadius: "100px",
+        borderTopRightRadius: "100px",
+        boxShadow: "0px -10px 50px rgba(0,0,0,0)"
+      }}
+      transition={{ 
+        y: {
+          duration: 1,
+          ease: [0.165, 0.84, 0.44, 1] 
+        },
+        width: {
+          duration: 0.8,
+          delay: 0.2,
+          ease: [0.165, 0.84, 0.44, 1]
+        },
+        height: {
+          duration: 0.7,
+          delay: 0.1,
+          ease: [0.165, 0.84, 0.44, 1]
+        },
+        left: {
+          duration: 0.8,
+          delay: 0.2,
+          ease: [0.165, 0.84, 0.44, 1]
+        },
+        right: {
+          duration: 0.8,
+          delay: 0.2,
+          ease: [0.165, 0.84, 0.44, 1]
+        },
+        scale: {
+          duration: 0.5
+        },
+        borderTopLeftRadius: {
+          duration: 0.6,
+          ease: [0.165, 0.84, 0.44, 1]
+        },
+        borderTopRightRadius: {
+          duration: 0.6,
+          ease: [0.165, 0.84, 0.44, 1]
+        },
+        boxShadow: {
+          duration: 1.2
+        }
+      }}
+    >
+      <div className="p-10 flex flex-col h-full relative z-10 max-w-5xl w-full">
+        {/* Close button */}
+        <motion.button 
+          onClick={onClose}
+          className="absolute right-10 top-10 bg-[#3a2f2a] bg-opacity-10 p-3 rounded-full hover:bg-opacity-20 transition-colors"
+          whileHover={{ scale: 1.1, rotate: 90 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#3a2f2a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </motion.button>
+
+        {/* Content with staggered animations */}
+        <div className="mt-10 max-w-4xl">
+          <motion.div
+            initial={{ y: 30 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.9, duration: 0.8, ease: [0.165, 0.84, 0.44, 1] }}
+          >
+            <motion.h2 
+              className="text-5xl font-bold tracking-tight text-[#3a2f2a]"
+              initial={{ letterSpacing: "0.2em" }}
+              animate={{ letterSpacing: "0.05em" }}
+              transition={{ duration: 1.2, delay: 0.9, ease: [0.165, 0.84, 0.44, 1] }}
+            >
+              {project.title}
+            </motion.h2>
+          </motion.div>
+          
+          <motion.div 
+            className="h-px bg-gradient-to-r from-transparent via-[#3a2f2a] to-transparent w-full my-8"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 1.1, duration: 1, ease: [0.165, 0.84, 0.44, 1] }}
+            style={{ opacity: 0.3 }}
+          />
+          
+          <motion.div
+            initial={{ y: 20 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 1.2, duration: 0.7, ease: [0.165, 0.84, 0.44, 1] }}
+            className="mt-6 text-xl flex items-center"
+          >
+            <span className="text-[#3a2f2a] opacity-60 mr-2">Year:</span> 
+            <span>{project.year}</span>
+          </motion.div>
+          
+          <motion.div
+            initial={{ y: 30 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 1.3, duration: 0.7, ease: [0.165, 0.84, 0.44, 1] }}
+            className="mt-10 text-lg text-[#3a2f2a] opacity-80 leading-relaxed"
+          >
+            <p>Detailed project description will come here. This panel features staggered animations for content elements, a sophisticated coffee-white color scheme, and an elegant entrance animation.</p>
+            <p className="mt-4">The animation begins small and centered, then gracefully expands with a refined cubic-bezier curve that creates a smooth, pleasant motion effect.</p>
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 function Home_prev({}) {
   return (
     <motion.div className="home absolute scale-[96%] z-0">
@@ -38,31 +193,113 @@ function Home_prev({}) {
 }
 
 function Work() {
-  const lenis = useLenis(({ scroll }) => {
-    // called every scroll
+  const [itemCount, setItemCount] = React.useState(5);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [selectedProject, setSelectedProject] = React.useState<{
+    title: string;
+    year: string;
+    image: string[];
+    number_of_images: number;
+  } | null>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const lenisRef = React.useRef<any>(null);
+  
+  // Array of work items to be repeated
+  const workItems = [
+    {
+      image: [studydeck],
+      title: "Study-Deck",
+      year: "2023",
+      number_of_images: 1
+    },
+    {
+      image: [inter],
+      title: "Inter-BITS",
+      year: "2023",
+      number_of_images: 1
+    },
+    {
+      image: [Main_sop, SideA_sop, SideB_sop],
+      title: "BITS Pilani Main Website",
+      year: "2023",
+      number_of_images: 3
+    }
+  ];
+
+  const lenis = useLenis(({ scroll, limit }) => {
+    if (!containerRef.current || isLoading) return;
+
+    const container = containerRef.current;
+    const containerHeight = container.scrollHeight;
+    const scrollPosition = scroll;
+    const windowHeight = window.innerHeight;
+
+    // Start loading more items when we're 70% through the current content
+    if (scrollPosition + windowHeight > containerHeight * 0.7) {
+      setIsLoading(true);
+      // Add more items with a slight delay to prevent stuttering
+      setTimeout(() => {
+        setItemCount(prev => prev + 3);
+        setIsLoading(false);
+      }, 100);
+    }
   });
 
-  const ref = React.useRef<HTMLDivElement | null>(null);
-
-  React.useEffect(() => {
-    // Ensure gridRef.current is not null before calling repeatItems
-    if (ref.current) {
-      repeatItems(ref.current, 3);
-    }
-  }, []);
-
-  const repeatItems = (parentEl: HTMLElement, total = 0) => {
-    const items: HTMLElement[] = [...parentEl.children] as HTMLElement[];
-
-    for (let i = 0; i <= total - 1; ++i) {
-      var cln = items[i].cloneNode(true) as HTMLElement;
-      parentEl.appendChild(cln);
+  const handleProjectClick = (project: {
+    title: string;
+    year: string;
+    image: string[];
+    number_of_images: number;
+  }) => {
+    setSelectedProject(project);
+    if (lenisRef.current) {
+      lenisRef.current.stop();
     }
   };
 
+  const handleClosePanel = () => {
+    setSelectedProject(null);
+    if (lenisRef.current) {
+      lenisRef.current.start();
+    }
+  };
+
+  // Update Lenis scroll instance when content changes
+  React.useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.resize();
+    }
+  }, [itemCount]);
+
+  // Generate repeated work items
+  const generateRepeatedItems = () => {
+    const items = [];
+    for (let i = 0; i < itemCount; i++) {
+      const index = i % workItems.length;
+      const item = workItems[index];
+      items.push(
+        <motion.div
+          key={`work-item-${i}`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: i * 0.1 }}
+          onClick={() => handleProjectClick(item)}
+        >
+          <WorkImage
+            image={item.image}
+            title={item.title}
+            year={item.year}
+            number_of_images={item.number_of_images}
+          />
+        </motion.div>
+      );
+    }
+    return items;
+  };
+
   return (
-    <ReactLenis root>
-      <motion.div className="">
+    <ReactLenis root ref={lenisRef}>
+      <motion.div className="relative">
         <motion.div
           initial={{ filter: "brightness(100%)", scale: 1 }}
           animate={{ filter: "brightness(50%)", scale: 0.98 }}
@@ -83,7 +320,7 @@ function Work() {
             ease: variants.work_slide_up.ease,
           }}
         >
-          <motion.div className="">
+          <motion.div className="relative">
             <motion.div className="h-[100svh] pt-[10vw]">
               <AuthorHeading
                 timerduration={0}
@@ -93,28 +330,20 @@ function Work() {
               />
             </motion.div>
 
-            <div className="parent" >
-              <WorkImage
-                image={[studydeck]}
-                title="Study-Deck"
-                year="2023"
-                number_of_images={1}
-              />
-              <WorkImage
-                image={[inter]}
-                title="Inter-BITS"
-                year="2023"
-                number_of_images={1}
-              />
-              <WorkImage
-                image={[Main_sop, SideA_sop, SideB_sop]}
-                title="BITS Pilani Main Website"
-                year="2023"
-                number_of_images={3}
-              />
+            <div ref={containerRef} className="parent infinite-scroll-container relative">
+              {generateRepeatedItems()}
             </div>
           </motion.div>
         </motion.div>
+        
+        <AnimatePresence>
+          {selectedProject && (
+            <ProjectDetailsPanel 
+              project={selectedProject} 
+              onClose={handleClosePanel} 
+            />
+          )}
+        </AnimatePresence>
       </motion.div>
       <Cursor />
     </ReactLenis>

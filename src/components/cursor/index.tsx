@@ -9,6 +9,7 @@ function Cursor() {
   const [isGrab, setIsGrab] = useState(false);
   const [isPointer, setIsPointer] = useState(false);
   const [hasMoved, setHasMoved] = useState(false);
+  const [showViewProject, setShowViewProject] = useState(false);
 
   const onMouseMove = useCallback(
     ({ clientX, clientY }) => {
@@ -97,15 +98,45 @@ function Cursor() {
     };
   }, []);
 
+  // Add effect for work items
+  useEffect(() => {
+    let workElements = [];
+
+    const onWorkItemEnter = () => {
+      setShowViewProject(true);
+    };
+    
+    const onWorkItemLeave = () => {
+      setShowViewProject(false);
+    };
+
+    // Select all work image containers
+    workElements = [...document.querySelectorAll(".cursor-none")];
+
+    workElements.forEach((element) => {
+      element.addEventListener("mouseenter", onWorkItemEnter, false);
+      element.addEventListener("mouseleave", onWorkItemLeave, false);
+    });
+
+    return () => {
+      workElements.forEach((element) => {
+        element.removeEventListener("mouseenter", onWorkItemEnter, false);
+        element.removeEventListener("mouseleave", onWorkItemLeave, false);
+      });
+    };
+  }, []);
+
   return (
     <div style={{ opacity: hasMoved ? 1 : 0 }} className={s.container}>
       <div ref={cursor}>
         <div
           className={cn(s.cursor, isGrab && s.grab, isPointer && s.pointer)}
         />
-        <div className="text-center py-[10px] text-14 font-bold leading-none relative rounded-full items-center w-[120px] text-white bg-black bg-opacity-50 ">
-          View Project
-        </div>
+        {showViewProject && (
+          <div className="text-center py-[10px] text-14 font-bold leading-none relative rounded-full items-center w-[120px] text-white bg-black bg-opacity-50 ">
+            View Project
+          </div>
+        )}
       </div>
     </div>
   );

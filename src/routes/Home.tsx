@@ -15,6 +15,7 @@ function Home() {
     <motion.div className="app_container">
       <Timer timerduration={timerduration} />
       <HomePage timerduration={timerduration} />
+      <Cursor />
     </motion.div>
   );
 }
