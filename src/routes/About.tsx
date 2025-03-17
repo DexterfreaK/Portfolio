@@ -3,6 +3,7 @@ import { ReactLenis } from "@studio-freight/react-lenis";
 import CursorViewProject from "../components/CursorViewProject";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import React from "react";
 
 function About() {
   const [isHovered, setIsHovered] = useState(false);
@@ -77,9 +78,19 @@ function About() {
       }
     }
   };
-  
+  const lenisRef = React.useRef<any>(null);
+
   return (
-    <ReactLenis root options={{ wheelMultiplier: 1.2, touchMultiplier: 1, gestureOrientation: 'vertical', touchInertiaMultiplier: 3 }}>
+    <ReactLenis root ref={lenisRef} options={{   
+      lerp: 0.1,
+      duration: 1.5,
+      smoothWheel: true,
+      smoothTouch: true,
+      touchMultiplier: 2,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      touchInertiaMultiplier: 3
+      }}>
       <div className="w-full bg-white flex flex-col items-center overflow-x-hidden">
         {/* Bio Section */}
         <div className="w-full max-w-[1400px] flex flex-col md:flex-row items-center md:items-start py-20 px-6 md:px-12">

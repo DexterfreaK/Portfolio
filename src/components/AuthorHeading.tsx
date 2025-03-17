@@ -67,8 +67,9 @@ export default function AuthorHeading({
       className="flex h-full w-full items-center justify-center flex-col pb-[10vw] uppercase text-center text-white"
       style={{ color: textcolorWhite ? "white" : "black" }}
     >
+      {/* For mobile view (default) text is larger, on md and up it's smaller */}
       <motion.div
-        className="font-MonumentGroteskRegular text-[12vw] leading-[4.5vw] "
+        className="font-MonumentGroteskRegular text-[23vw] md:text-[12vw] leading-[9vw] md:leading-[4.5vw]"
         transition={{
           staggerChildren: 1,
         }}
@@ -79,7 +80,8 @@ export default function AuthorHeading({
           </div>
         ))}
       </motion.div>
-      <motion.div className=" text-[.8vw] leading-[1.5vw] whitespace-normal w-[30vw]">
+      {/* Adjust the subparagraph text size similarly */}
+      <motion.div className="text-[2vw] md:text-[.8vw] leading-[2.1vw] md:leading-[1.5vw] whitespace-normal w-[30vw]">
         {subparagraph}
       </motion.div>
     </motion.div>
