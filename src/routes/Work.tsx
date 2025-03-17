@@ -12,13 +12,13 @@ import { Cursor } from "../components/cursor";
 
 const variants = {
   prev_slide_back_out: {
-    duration: 2,
-    ease: cubicBezier(0.19, 1, 0.22, 1),
+    duration: 1.2,
+    ease: [0.165, 0.84, 0.44, 1],
   },
 
   work_slide_up: {
-    duration: 2,
-    ease: cubicBezier(0.19, 1, 0.22, 1),
+    duration: 1.2,
+    ease: [0.165, 0.84, 0.44, 1],
   },
 };
 
@@ -192,6 +192,124 @@ function Home_prev({}) {
   );
 }
 
+// GravitationalBackground component
+const GravitationalBackground = () => {
+  // State to track viewport size
+  const [isMobile, setIsMobile] = React.useState(false);
+  
+  // Check for mobile viewport on mount and resize
+  React.useEffect(() => {
+    const checkViewport = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkViewport();
+    window.addEventListener("resize", checkViewport);
+    return () => window.removeEventListener("resize", checkViewport);
+  }, []);
+
+  return (
+    <motion.div
+      className="absolute inset-0 overflow-hidden z-0 opacity-70"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 0.7 }}
+      transition={{ duration: 1.5, delay: 0.5 }}
+    >
+      {/* First blob - transitions between yellow and orange */}
+      <motion.div
+        className="absolute rounded-full filter blur-[120px]"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0.2) 70%, rgba(255,215,0,0) 100%)',
+        }}
+        initial={{ 
+          x: '60%', 
+          y: '20%',
+          width: isMobile ? '120vw' : '60vw',
+          height: isMobile ? '120vw' : '60vw',
+        }}
+        animate={{ 
+          x: ['60%', '40%', '65%', '35%', '60%'],
+          y: ['20%', '10%', '15%', '25%', '20%'],
+          scale: [1, 1.2, 0.9, 1.1, 1],
+          background: [
+            'radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0.2) 70%, rgba(255,215,0,0) 100%)',
+            'radial-gradient(circle, rgba(255,140,0,0.8) 0%, rgba(255,140,0,0.2) 70%, rgba(255,140,0,0) 100%)',
+            'radial-gradient(circle, rgba(255,165,0,0.8) 0%, rgba(255,165,0,0.2) 70%, rgba(255,165,0,0) 100%)',
+            'radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0.2) 70%, rgba(255,215,0,0) 100%)',
+          ]
+        }}
+        transition={{ 
+          duration: 60, 
+          ease: "easeInOut", 
+          repeat: Infinity,
+          repeatType: "reverse",
+          times: [0, 0.2, 0.5, 0.8, 1],
+          x: {
+            duration: 50,
+            times: [0, 0.3, 0.5, 0.7, 1],
+            ease: [0.1, 0.85, 0.2, 1]
+          },
+          y: {
+            duration: 70,
+            times: [0, 0.4, 0.6, 0.8, 1],
+            ease: [0.4, 0.1, 0.9, 0.2]
+          },
+          background: {
+            duration: 40,
+            ease: "easeInOut"
+          }
+        }}
+      />
+      
+      {/* Second blob - transitions between black and purple */}
+      <motion.div
+        className="absolute rounded-full filter blur-[100px]"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%)',
+        }}
+        initial={{ 
+          x: '30%', 
+          y: '70%',
+          width: isMobile ? '110vw' : '50vw',
+          height: isMobile ? '110vw' : '50vw',
+        }}
+        animate={{ 
+          x: ['30%', '10%', '25%', '15%', '30%'],
+          y: ['70%', '60%', '75%', '80%', '70%'],
+          scale: [1, 0.9, 1.1, 0.95, 1],
+          background: [
+            'radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%)',
+            'radial-gradient(circle, rgba(75,0,130,0.8) 0%, rgba(75,0,130,0.2) 70%, rgba(75,0,130,0) 100%)',
+            'radial-gradient(circle, rgba(138,43,226,0.8) 0%, rgba(138,43,226,0.2) 70%, rgba(138,43,226,0) 100%)',
+            'radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%)',
+          ]
+        }}
+        transition={{ 
+          duration: 75, 
+          ease: "easeInOut", 
+          repeat: Infinity,
+          repeatType: "reverse",
+          times: [0, 0.25, 0.6, 0.85, 1],
+          x: {
+            duration: 60,
+            times: [0, 0.2, 0.5, 0.8, 1],
+            ease: [0.1, 0.9, 0.3, 0.7]
+          },
+          y: {
+            duration: 80,
+            times: [0, 0.3, 0.6, 0.9, 1],
+            ease: [0.4, 0.1, 0.7, 0.3]
+          },
+          background: {
+            duration: 50,
+            ease: "easeInOut"
+          }
+        }}
+      />
+    </motion.div>
+  );
+};
+
 function Work() {
   const [itemCount, setItemCount] = React.useState(5);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -203,9 +321,10 @@ function Work() {
   } | null>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const lenisRef = React.useRef<any>(null);
+  const [isTransitioning, setIsTransitioning] = React.useState(true);
   
-  // Array of work items to be repeated
-  const workItems = [
+  // Pre-render work items
+  const workItems = React.useMemo(() => [
     {
       image: [studydeck],
       title: "Study-Deck",
@@ -224,7 +343,41 @@ function Work() {
       year: "2023",
       number_of_images: 3
     }
-  ];
+  ], []);
+
+  // Generate repeated work items with memoization
+  const generateRepeatedItems = React.useCallback(() => {
+    const items = [];
+    for (let i = 0; i < itemCount; i++) {
+      const index = i % workItems.length;
+      const item = workItems[index];
+      items.push(
+        <motion.div
+          key={`work-item-${i}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: isTransitioning ? 0.8 + i * 0.1 : i * 0.1 }}
+          onClick={() => handleProjectClick(item)}
+        >
+          <WorkImage
+            image={item.image}
+            title={item.title}
+            year={item.year}
+            number_of_images={item.number_of_images}
+          />
+        </motion.div>
+      );
+    }
+    return items;
+  }, [itemCount, workItems, isTransitioning]);
+
+  // Handle transition completion
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const lenis = useLenis(({ scroll, limit }) => {
     if (!containerRef.current || isLoading) return;
@@ -271,32 +424,6 @@ function Work() {
     }
   }, [itemCount]);
 
-  // Generate repeated work items
-  const generateRepeatedItems = () => {
-    const items = [];
-    for (let i = 0; i < itemCount; i++) {
-      const index = i % workItems.length;
-      const item = workItems[index];
-      items.push(
-        <motion.div
-          key={`work-item-${i}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: i * 0.1 }}
-          onClick={() => handleProjectClick(item)}
-        >
-          <WorkImage
-            image={item.image}
-            title={item.title}
-            year={item.year}
-            number_of_images={item.number_of_images}
-          />
-        </motion.div>
-      );
-    }
-    return items;
-  };
-
   return (
     <ReactLenis root ref={lenisRef} options={{
       lerp: 0.1,
@@ -310,11 +437,11 @@ function Work() {
     }}>
       <motion.div className="relative">
         <motion.div
-          initial={{ filter: "brightness(100%)", scale: 1 }}
-          animate={{ filter: "brightness(50%)", scale: 0.98 }}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
           transition={{
-            duration: variants.prev_slide_back_out.duration,
-            ease: variants.prev_slide_back_out.ease,
+            duration: 1.2,
+            ease: [0.165, 0.84, 0.44, 1]
           }}
         >
           <Home_prev />
@@ -322,13 +449,16 @@ function Work() {
 
         <motion.div
           className="bg-[#F4F0F0] rounded-[50px] z-50 absolute w-[100svw]"
-          initial={{ opacity: 1, y: 2000 }}
-          animate={{ opacity: 1, y: -50 }}
+          initial={{ y: "100%" }}
+          animate={{ y: "-50px" }}
           transition={{
-            duration: variants.work_slide_up.duration,
-            ease: variants.work_slide_up.ease,
+            duration: 1.2,
+            ease: [0.165, 0.84, 0.44, 1]
           }}
         >
+          {/* Add the gravitational background */}
+          <GravitationalBackground />
+          
           <motion.div className="relative">
             <motion.div className="h-[100svh] pt-[10vw]">
               <AuthorHeading
