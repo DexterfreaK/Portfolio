@@ -214,7 +214,11 @@ function About() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          CONTACT
+          <span>CO</span>
+          <span className="font-MonumentGroteskBoldItalic">N</span>
+          <span>TA</span>
+          <span className="font-MonumentGroteskBoldItalic">C</span>
+          <span>T</span>
         </motion.h1>
         
         {/* Two contact options */}

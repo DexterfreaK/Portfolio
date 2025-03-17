@@ -1,6 +1,7 @@
 import { cubicBezier, motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavbarStore, NavbarState } from "../store";
+import { useEffect } from "react";
 
 function NavbarOption({ title, state }: { title: string; state: NavbarState }) {
   
@@ -31,11 +32,25 @@ export default function Navbar({
   timerduration: number;
   animateOff?: boolean;
 }) {
-
-
+  const location = useLocation();
   const NavbarCurrentState = useNavbarStore(
     (state) => state.NavbarCurrentState
   );
+  const setNavbarCurrentState = useNavbarStore(
+    (state) => state.setNavbarCurrentState
+  );
+
+  useEffect(() => {
+    const path = location.pathname.slice(1) || "home";
+    
+    if (path === "home") {
+      setNavbarCurrentState(NavbarState.Home);
+    } else if (path === "work") {
+      setNavbarCurrentState(NavbarState.Work);
+    } else if (path === "about") {
+      setNavbarCurrentState(NavbarState.About);
+    }
+  }, [location.pathname, setNavbarCurrentState]);
 
   return (
     <header className="fixed bottom-[2rem] z-[1000] w-[100%] flex justify-center">
