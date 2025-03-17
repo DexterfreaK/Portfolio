@@ -298,7 +298,16 @@ function Work() {
   };
 
   return (
-    <ReactLenis root ref={lenisRef}>
+    <ReactLenis root ref={lenisRef} options={{
+      lerp: 0.1,
+      duration: 1.5,
+      smoothWheel: true,
+      smoothTouch: true,
+      touchMultiplier: 2,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      touchInertiaMultiplier: 3,
+    }}>
       <motion.div className="relative">
         <motion.div
           initial={{ filter: "brightness(100%)", scale: 1 }}
