@@ -1,44 +1,44 @@
 import { motion, stagger, AnimatePresence } from "framer-motion";
 import { ReactLenis } from "@studio-freight/react-lenis";
 import CursorViewProject from "../components/CursorViewProject";
-import { Link } from "react-router-dom";
+import SlideUpAnimation from "../components/SlideUp";
 import { useState, useEffect } from "react";
 import React from "react";
 
 function About() {
   const [isHovered, setIsHovered] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  
+
   // Text options that will rotate
   const textOptions = [
     {
       firstLine: "Systems",
       secondLine: "Enthusiast",
-      id: "systems-enthusiast"
+      id: "systems-enthusiast",
     },
     {
       firstLine: "Typeface",
       secondLine: "Collector",
-      id: "typeface-collector"
+      id: "typeface-collector",
     },
     {
       firstLine: "Movie",
       secondLine: "Quoter",
-      id: "movie-quoter"
-    }
+      id: "movie-quoter",
+    },
   ];
-  
+
   // Auto rotate text every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTextIndex((prevIndex) => 
+      setCurrentTextIndex((prevIndex) =>
         prevIndex === textOptions.length - 1 ? 0 : prevIndex + 1
       );
     }, 5000);
-    
+
     return () => clearInterval(interval);
   }, []);
-  
+
   // Animation variants for letter-by-letter animation
   const containerVariants = {
     hidden: { opacity: 1 },
@@ -46,58 +46,64 @@ function About() {
       opacity: 1,
       transition: {
         staggerChildren: 0.04,
-        delayChildren: 0.1
-      }
+        delayChildren: 0.1,
+      },
     },
     exit: {
       opacity: 1,
       transition: {
         staggerChildren: 0.04,
-        staggerDirection: -1
-      }
-    }
+        staggerDirection: -1,
+      },
+    },
   };
-  
+
   // Letter variants - for entering and exiting
   const letterVariants = {
     hidden: { opacity: 0, y: 10 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.4,
-        ease: [0.2, 0.6, 0.3, 1]
-      }
+        ease: [0.2, 0.6, 0.3, 1],
+      },
     },
-    exit: { 
+    exit: {
       opacity: 0,
       y: -10,
       transition: {
         duration: 0.3,
-        ease: [0.2, 0.6, 0.3, 1]
-      }
-    }
+        ease: [0.2, 0.6, 0.3, 1],
+      },
+    },
   };
   const lenisRef = React.useRef<any>(null);
 
   return (
-    <ReactLenis root ref={lenisRef} options={{   
-      lerp: 0.1,
-      duration: 1.5,
-      smoothWheel: true,
-      smoothTouch: true,
-      touchMultiplier: 2,
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      touchInertiaMultiplier: 3
-      }}>
+    <ReactLenis
+      root
+      ref={lenisRef}
+      options={{
+        lerp: 0.1,
+        duration: 1.5,
+        smoothWheel: true,
+        smoothTouch: true,
+        touchMultiplier: 2,
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        touchInertiaMultiplier: 3,
+      }}
+    >
       <div className="w-full bg-white flex flex-col items-center overflow-x-hidden">
         {/* Bio Section */}
         <div className="w-full max-w-[1400px] flex flex-col md:flex-row items-center md:items-start py-20 px-6 md:px-12">
           {/* Image Column */}
           <div className="w-full md:w-1/2 mb-10 md:mb-0 md:pr-10">
             <div className="relative">
-              <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">ME</div>
+              <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
+                ME
+              </div>
               <motion.div
                 className="w-full aspect-[3/4] bg-gray-300 overflow-hidden"
                 initial={{ opacity: 0 }}
@@ -105,26 +111,25 @@ function About() {
                 transition={{ duration: 0.8 }}
               >
                 {/* Replace placeholder with actual image */}
-                <img 
-                  src="/profile.jpg" 
-                  alt="Harshit Nagpal" 
+                <img
+                  src="/profile.jpg"
+                  alt="Harshit Nagpal"
                   className="w-full h-full object-cover"
                 />
               </motion.div>
             </div>
           </div>
-          
+
           {/* Text Column */}
           <div className="w-full md:w-1/2 md:pl-10">
-            <motion.p 
-              className="text-sm font-MonumentGrotesk tracking-wide mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              HARSHIT NAGPAL - EST 2003
-            </motion.p>
-            
+            <div className="overflow-hidden">
+              <SlideUpAnimation>
+                <p className="text-sm font-MonumentGrotesk tracking-wide">
+                  HARSHIT NAGPAL - EST 2003
+                </p>
+              </SlideUpAnimation>
+            </div>
+
             <div className="h-[25vw] md:h-[12vw] mb-4 overflow-hidden relative">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -136,106 +141,101 @@ function About() {
                   exit="exit"
                 >
                   <div className="flex flex-wrap">
-                    {textOptions[currentTextIndex].firstLine.split('').map((letter, index, array) => {
-                      if (letter === ' ') {
-                        return <span key={`first-${index}`} className="inline-block">&nbsp;</span>;
-                      }
-                      
-                      return (
-                        <motion.span 
-                          key={`first-${index}`} 
-                          className="inline-block text-black"
-                          variants={letterVariants}
-                        >
-                          {letter}
-                        </motion.span>
-                      );
-                    })}
+                    {textOptions[currentTextIndex].firstLine
+                      .split("")
+                      .map((letter, index, array) => {
+                        if (letter === " ") {
+                          return (
+                            <span
+                              key={`first-${index}`}
+                              className="inline-block"
+                            >
+                              &nbsp;
+                            </span>
+                          );
+                        }
+
+                        return (
+                          <motion.span
+                            key={`first-${index}`}
+                            className="inline-block text-black"
+                            variants={letterVariants}
+                          >
+                            {letter}
+                          </motion.span>
+                        );
+                      })}
                   </div>
-                  
+
                   <div className="flex flex-wrap mt-2">
-                    {textOptions[currentTextIndex].secondLine.split('').map((letter, index, array) => {
-                      if (letter === ' ') {
-                        return <span key={`second-${index}`} className="inline-block">&nbsp;</span>;
-                      }
-                      
-                      return (
-                        <motion.span 
-                          key={`second-${index}`} 
-                          className="inline-block text-black"
-                          variants={letterVariants}
-                        >
-                          {letter}
-                        </motion.span>
-                      );
-                    })}
+                    {textOptions[currentTextIndex].secondLine
+                      .split("")
+                      .map((letter, index, array) => {
+                        if (letter === " ") {
+                          return (
+                            <span
+                              key={`second-${index}`}
+                              className="inline-block"
+                            >
+                              &nbsp;
+                            </span>
+                          );
+                        }
+
+                        return (
+                          <motion.span
+                            key={`second-${index}`}
+                            className="inline-block text-black"
+                            variants={letterVariants}
+                          >
+                            {letter}
+                          </motion.span>
+                        );
+                      })}
                   </div>
                 </motion.div>
               </AnimatePresence>
             </div>
-            
-            <motion.p 
-              className="text-lg md:text-xl font-MonumentGrotesk mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              A designer who thinks "multi-disciplinary" is a buzzword
-              and wonders why we write bios in third-person.
-            </motion.p>
-            
-            <motion.p 
-              className="text-base font-MonumentGrotesk mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              I've been designing brands and digital experiences for almost a decade, approaching
-              each project with equal parts strategy and style. Currently living in San Diego, CA, and
-              working with the talented team at Five&Done in Orange County.
-            </motion.p>
-            
-            <motion.p 
-              className="text-base font-MonumentGrotesk mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              When I'm not photosynthesizing in the warm glow of my computer screen, you can find
-              me reading an old book, reorganizing my living space (again), and snacking on an
-              unhealthy amount of Goldfish and trail mix.
-            </motion.p>
-            
-            <motion.p 
-              className="text-base font-MonumentGrotesk"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              If you have any exciting projects to talk about, or just want to be friends, feel free to hit
-              me up.
-            </motion.p>
+
+            <SlideUpAnimation staggerChildren={true} staggerDelay={0.1}>
+              <motion.p className="text-lg md:text-xl font-MonumentGrotesk mb-6">
+                A designer who thinks "multi-disciplinary" is a buzzword and
+                wonders why we write bios in third-person.
+              </motion.p>
+              <motion.p className="text-base font-MonumentGrotesk mb-6">
+                I've been designing brands and digital experiences for almost a
+                decade, approaching each project with equal parts strategy and
+                style. Currently living in San Diego, CA, and working with the
+                talented team at Five&Done in Orange County.
+              </motion.p>
+              <motion.p className="text-base font-MonumentGrotesk mb-6">
+                When I'm not photosynthesizing in the warm glow of my computer
+                screen, you can find me reading an old book, reorganizing my
+                living space (again), and snacking on an unhealthy amount of
+                Goldfish and trail mix.
+              </motion.p>
+              <motion.p className="text-base font-MonumentGrotesk">
+                If you have any exciting projects to talk about, or just want to
+                be friends, feel free to hit me up.
+              </motion.p>
+            </SlideUpAnimation>
           </div>
         </div>
-        
+
         {/* Main CONTACT heading */}
-        <motion.h1 
-          className="text-[18vw] font-MonumentGroteskBold leading-none  mb-24"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <span>CO</span>
-          <span className="font-MonumentGroteskBoldItalic">N</span>
-          <span>TA</span>
-          <span className="font-MonumentGroteskBoldItalic">C</span>
-          <span>T</span>
-        </motion.h1>
-        
+        <SlideUpAnimation>
+          <motion.h1 className="text-[12vw] font-MonumentGroteskBold leading-none  mb-10">
+            <span>CO</span>
+            <span className="font-MonumentGroteskBoldItalic">N</span>
+            <span>TA</span>
+            <span className="font-MonumentGroteskBoldItalic">C</span>
+            <span>T</span>
+          </motion.h1>
+        </SlideUpAnimation>
         {/* Two contact options */}
         <div className="w-[90vw] max-w-[1200px] flex flex-col md:flex-row mb-20">
           {/* Project option */}
-          <motion.div 
+          <motion.div
             className="w-full md:w-1/2 bg-black text-white p-8 md:p-12 flex flex-col justify-center items-center cursor-pointer mb-4 md:mb-0 md:mr-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -243,13 +243,17 @@ function About() {
             whileHover={{ scale: 0.98 }}
           >
             <div className="w-full max-w-md">
-              <p className="text-sm uppercase tracking-wider mb-4">LET'S TALK ABOUT</p>
-              <h2 className="text-5xl md:text-6xl font-MonumentGroteskBold">A PROJECT</h2>
+              <p className="text-sm uppercase tracking-wider mb-4">
+                LET'S TALK ABOUT
+              </p>
+              <h2 className="text-5xl md:text-6xl font-MonumentGroteskBold">
+                A PROJECT
+              </h2>
             </div>
           </motion.div>
-          
+
           {/* Something else option */}
-          <motion.div 
+          <motion.div
             className="w-full md:w-1/2 bg-white text-black border border-black p-8 md:p-12 flex flex-col justify-center cursor-pointer md:ml-2 overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -258,16 +262,18 @@ function About() {
             onHoverEnd={() => setIsHovered(false)}
           >
             <div className="w-full max-w-md relative">
-              <p className="text-sm uppercase tracking-wider mb-4">LET'S TALK ABOUT</p>
+              <p className="text-sm uppercase tracking-wider mb-4">
+                LET'S TALK ABOUT
+              </p>
               <div className="flex items-center justify-between overflow-hidden relative">
-                <motion.h2 
+                <motion.h2
                   className="text-5xl md:text-6xl font-MonumentGroteskBold"
-                  animate={{ 
+                  animate={{
                     x: isHovered ? "-5%" : "0%",
                   }}
-                  transition={{ 
-                    duration: 0.5, 
-                    ease: [0.19, 1, 0.22, 1] 
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.19, 1, 0.22, 1],
                   }}
                 >
                   SOMETHING ELSE
@@ -275,37 +281,37 @@ function About() {
                 <motion.div
                   className="flex items-center absolute right-0"
                   initial={{ opacity: 0, x: -20, width: "0%" }}
-                  animate={{ 
+                  animate={{
                     opacity: isHovered ? 1 : 0,
                     x: isHovered ? 0 : -20,
-                    width: isHovered ? "15%" : "0%"
+                    width: isHovered ? "15%" : "0%",
                   }}
-                  transition={{ 
-                    duration: 0.5, 
-                    ease: [0.19, 1, 0.22, 1] 
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.19, 1, 0.22, 1],
                   }}
                 >
-                  <svg 
-                    width="40" 
-                    height="40" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
+                  <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     className="transform scale-150"
                   >
-                    <motion.path 
-                      d="M5 12H19M19 12L12 5M19 12L12 19" 
-                      stroke="black" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
+                    <motion.path
+                      d="M5 12H19M19 12L12 5M19 12L12 19"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
                       strokeLinejoin="round"
                       initial={{ pathLength: 0 }}
-                      animate={{ 
-                        pathLength: isHovered ? 1 : 0 
+                      animate={{
+                        pathLength: isHovered ? 1 : 0,
                       }}
-                      transition={{ 
-                        duration: 0.6, 
-                        ease: [0.19, 1, 0.22, 1] 
+                      transition={{
+                        duration: 0.6,
+                        ease: [0.19, 1, 0.22, 1],
                       }}
                     />
                   </svg>

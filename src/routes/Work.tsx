@@ -411,7 +411,7 @@ function Work() {
             duration: 0.3,
             delay: isTransitioning ? 0.8 + i * 0.1 : i * 0.1,
           }}
-          onClick={() => handleProjectClick(item)}
+          // onClick={() => handleProjectClick(item)}
         >
           <WorkImage
             image={item.image}
