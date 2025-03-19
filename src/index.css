@@ -3,41 +3,40 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Monument Grotesk Bold';
-  src: url('./assets/font/MonumentGrotesk-Bold.woff2');
+  font-family: "Monument Grotesk Bold";
+  src: url("./assets/font/MonumentGrotesk-Bold.woff2");
 }
 
 @font-face {
-  font-family: 'Monument Grotesk Bold Italic';
-  src: url('./assets/font/MonumentGrotesk-BoldItalic.ttf');
+  font-family: "Monument Grotesk Bold Italic";
+  src: url("./assets/font/MonumentGrotesk-BoldItalic.ttf");
 }
 
 @font-face {
-  font-family: 'Monument Grotesk Italic';
-  src: url('./assets/font/MonumentGrotesk-Italic.woff2');
+  font-family: "Monument Grotesk Italic";
+  src: url("./assets/font/MonumentGrotesk-Italic.woff2");
 }
 
 @font-face {
-  font-family: 'Monument Grotesk Medium';
-  src: url('./assets/font/MonumentGrotesk-Medium.ttf');
+  font-family: "Monument Grotesk Medium";
+  src: url("./assets/font/MonumentGrotesk-Medium.ttf");
 }
 @font-face {
-  font-family: 'Monument Grotesk Medium Italic';
-  src: url('./assets/font/MonumentGrotesk-MediumItalic.ttf');
+  font-family: "Monument Grotesk Medium Italic";
+  src: url("./assets/font/MonumentGrotesk-MediumItalic.ttf");
 }
 @font-face {
-  font-family: 'Monument Grotesk Mono';
-  src: url('./assets/font/MonumentGrotesk-Mono.ttf');
+  font-family: "Monument Grotesk Mono";
+  src: url("./assets/font/MonumentGrotesk-Mono.ttf");
 }
 @font-face {
-  font-family: 'Monument Grotesk Regular';
-  src: url('./assets/font/MonumentGrotesk-Regular.woff2');
+  font-family: "Monument Grotesk Regular";
+  src: url("./assets/font/MonumentGrotesk-Regular.woff2");
 }
 @font-face {
-  font-family: 'Monument Grotesk Semi Mono';
-  src: url('./assets/font/MonumentGrotesk-Semi-Mono.ttf');
+  font-family: "Monument Grotesk Semi Mono";
+  src: url("./assets/font/MonumentGrotesk-Semi-Mono.ttf");
 }
-
 
 :root {
   /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -50,6 +49,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%; */
+}
+
+.app_container {
+  background-color: #1d1b1b;
+  height: 100svh;
 }
 
 body {

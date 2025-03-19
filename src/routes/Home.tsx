@@ -19,10 +19,10 @@ function Home() {
 
 
   return (
-    <motion.div className="app_container" onWheel={handleWheel}>
+    <motion.div className="outer_home_container" onWheel={handleWheel}>
       {/* <Timer timerduration={timerduration} /> */}
       <HomePage timerduration={0} />
-      <Cursor />
+      {/* <Cursor /> */}
     </motion.div>
   );
 }

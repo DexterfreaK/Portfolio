@@ -495,7 +495,7 @@ function Work() {
       }}
     >
       <motion.div className="relative">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
           transition={{
@@ -504,7 +504,7 @@ function Work() {
           }}
         >
           <Home_prev />
-        </motion.div>
+        </motion.div> */}
 
         <motion.div
           className="bg-[#F4F0F0] rounded-[50px] z-50 absolute w-[100svw]"
@@ -546,7 +546,7 @@ function Work() {
           )}
         </AnimatePresence>
       </motion.div>
-      <Cursor />
+      {/* <Cursor /> */}
     </ReactLenis>
   );
 }
