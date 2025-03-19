@@ -220,7 +220,7 @@ function About() {
         
         {/* Main CONTACT heading */}
         <motion.h1 
-          className="text-[18vw] font-MonumentGroteskBold leading-none mt-20 mb-24"
+          className="text-[18vw] font-MonumentGroteskBold leading-none  mb-24"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}

@@ -108,10 +108,6 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
   const { scrollY } = useScroll();
   const isMobile = useResponsiveLayout();
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    console.log("Page scroll: ", latest);
-  });
-
   return (
     <motion.div
       className="home_container"
@@ -142,8 +138,8 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           ease: cubicBezier(0.17, 0.67, 0.32, 0.86),
         }}
         style={{
-          position: 'relative',
-          overflow: 'hidden'
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         <AuthorHeading
@@ -151,16 +147,18 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           title={["harshit", "nagpal"]}
           textcolorWhite
         />
-        
+
         {/* Widget container - ensures proper spacing on mobile */}
-        <div style={{ 
-          position: 'absolute', 
-          bottom: 0, 
-          left: 0, 
-          right: 0, 
-          padding: isMobile ? '10px' : '20px',
-          paddingBottom: isMobile ? '30px' : '20px'
-        }}>
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: isMobile ? "10px" : "20px",
+            paddingBottom: isMobile ? "30px" : "20px",
+          }}
+        >
           <WeatherWidget />
           <SpotifyWidget />
           <FilmWidget />

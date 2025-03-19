@@ -7,6 +7,7 @@ import Work from "./routes/Work";
 import About from "./routes/About";
 import { Cursor } from "./components/cursor";
 import { inject } from "@vercel/analytics";
+import ScrollRestoration from "./components/ScrollRestoration";
 
 
 
@@ -37,7 +38,8 @@ export default function App() {
 
   return (
     <>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
+        <ScrollRestoration />
         <Cursor />
         {React.cloneElement(element, { key: location.pathname })}
       </AnimatePresence>
