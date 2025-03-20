@@ -8,6 +8,7 @@ interface SlideUpAnimationProps {
   className?: string;
   staggerChildren?: boolean;
   staggerDelay?: number;
+  onAnimationComplete?: () => void;
 }
 
 /**
@@ -28,9 +29,12 @@ const SlideDownAnimation: React.FC<SlideUpAnimationProps> = ({
   className = "",
   staggerChildren = false,
   staggerDelay = 0.1,
+  onAnimationComplete,
 }) => {
   // Easing function that matches var(--ease-out-expo)
-  const easeOutExpo: [number, number, number, number] = [0.19, 1, 0.22, 1];
+  const easeInOutCirc: [number, number, number, number] = [
+    0.785, 0.135, 0.15, 0.86,
+  ];
 
   // For single child animation
   const singleChildVariants: Variants = {
@@ -41,7 +45,7 @@ const SlideDownAnimation: React.FC<SlideUpAnimationProps> = ({
       transform: "translate3d(0, 100%, 0)",
       transition: {
         duration: duration,
-        ease: easeOutExpo,
+        ease: easeInOutCirc,
         delay: delay,
       },
     },
@@ -67,7 +71,7 @@ const SlideDownAnimation: React.FC<SlideUpAnimationProps> = ({
       transform: "translate3d(0, 100%, 0)",
       transition: {
         duration: duration,
-        ease: easeOutExpo,
+        ease: easeInOutCirc,
       },
     },
   };
@@ -80,6 +84,7 @@ const SlideDownAnimation: React.FC<SlideUpAnimationProps> = ({
           initial="hidden"
           animate="visible"
           variants={singleChildVariants}
+          onAnimationComplete={onAnimationComplete}
         >
           {children}
         </motion.div>
@@ -90,14 +95,19 @@ const SlideDownAnimation: React.FC<SlideUpAnimationProps> = ({
   // If we are staggering children, wrap each child in a motion.div
   return (
     <motion.div
-      className={className}
+      className={`flex ${className}`}
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       {React.Children.map(children, (child, index) => (
         <div className="overflow-hidden" key={index}>
-          <motion.div variants={staggerItemVariants}>{child}</motion.div>
+          <motion.div
+            variants={staggerItemVariants}
+            onAnimationComplete={onAnimationComplete}
+          >
+            {child}
+          </motion.div>
         </div>
       ))}
     </motion.div>

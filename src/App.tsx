@@ -15,7 +15,7 @@ export default function App() {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
 
-  const timerDuration = 3; // seconds
+  const timerDuration = 3.5; // seconds
   const element = useRoutes([
     { path: "/", element: <Home /> },
     { path: "/home", element: <Home /> },

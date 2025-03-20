@@ -44,7 +44,7 @@ const ProjectDetailsPanel = ({ project, onClose }: ProjectDetailsProps) => {
 
   return (
     <motion.div
-      className="fixed bottom-0 left-0 right-0 z-50 bg-[#f5f0e8] text-[#3a2f2a] rounded-t-[40px] overflow-hidden flex justify-center"
+      className="ProjectdetailsPanel fixed bottom-0 left-0 right-0 z-50 bg-[#f5f0e8] text-[#3a2f2a] rounded-t-[40px] overflow-hidden flex justify-center"
       initial={{
         y: "100%",
         opacity: 1,
@@ -459,6 +459,7 @@ function Work() {
     number_of_images: number;
   }) => {
     setSelectedProject(project);
+
     if (lenisRef.current) {
       lenisRef.current.stop();
     }
