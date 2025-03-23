@@ -1,9 +1,119 @@
-import { motion, stagger, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  stagger,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { ReactLenis } from "@studio-freight/react-lenis";
 import CursorViewProject from "../components/CursorViewProject";
 import SlideUpAnimation from "../components/SlideUp";
 import { useState, useEffect } from "react";
 import React from "react";
+function DoubleContactHeading() {
+  const { scrollYProgress } = useScroll();
+  const bottomletter = "CONTACT".split("");
+  const topletter = "CONTACT".split("");
+
+  // -- Bottom letters rotate up & come forward (z)
+  const rt = (index : number) => [0.50 + index * 0.03, 0.75 + index * 0.03];
+
+  const getBottomLetterRotation = (index: number) => {
+    return useTransform(
+      scrollYProgress,
+      rt(index),
+      [0, 90] // Rotate from 0 to 90 degrees
+    );
+  };
+  const getBottomLetterZ = (index: number) => {
+    return useTransform(
+      scrollYProgress,
+      rt(index),
+      [0, 10] // Translate Z from 0px to 50px (example range)
+    );
+  };
+
+  // -- Top letters rotate down & can also adjust z if desired
+  const getTopLetterRotation = (index: number) => {
+    return useTransform(
+      scrollYProgress,
+      rt(index),
+      [90, 0] // Rotate from 90 down to 0 degrees
+    );
+  };
+  const getTopLetterZ = (index: number) => {
+    return useTransform(
+      scrollYProgress,
+      rt(index),
+      [10, 0] // Translate Z from 50px to 0px (example range)
+    );
+  };
+
+  // Map over each letter to create arrays of motion values
+  const bottomLetterRotations = bottomletter.map((_, i) =>
+    getBottomLetterRotation(i)
+  );
+  const bottomLetterZs = bottomletter.map((_, i) => getBottomLetterZ(i));
+  const topLetterRotations = topletter.map((_, i) => getTopLetterRotation(i));
+  const topLetterZs = topletter.map((_, i) => getTopLetterZ(i));
+
+  return (
+    <div className="w-full py-24 mb-20">
+      <div className="relative overflow-hidden">
+        {/* Main heading container with double text */}
+        <div className="flex justify-center items-center h-[25vh] md:h-[30vh] leading-[1.5]">
+          <div className="relative">
+            {/* Bottom row of letters that rotate up (and move forward in Z) */}
+            <div className="block text-center relative">
+              {topletter.map((letter, index) => (
+                <motion.div
+                  key={`bottom-${index}`}
+                  style={{
+                    fontSize: "10vw",
+                    fontFamily: "Monument Grotesk Bold",
+                    fontWeight: "bold",
+                    display: "inline-block",
+                    transformOrigin: "bottom",
+                    transformStyle: "preserve-3d",
+                    rotateX: bottomLetterRotations[index], // From 0 to 90 degrees
+                    z: bottomLetterZs[index], // From 0 to some positive value
+                    marginRight: "0.02em",
+                  }}
+                >
+                  {letter}
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Top row of letters that rotate down (and move from z=50 back to z=0 if desired) */}
+            <div className="block text-center absolute left-0 bottom-0 ">
+              {bottomletter.map((letter, index) => (
+                <motion.div
+                  key={`top-${index}`}
+                  style={{
+                    fontSize: "10vw",
+                    fontFamily: "Monument Grotesk Bold",
+                    fontWeight: "bold",
+                    display: "inline-block",
+                    transformOrigin: "top",
+                    transformStyle: "preserve-3d",
+                    rotateX: topLetterRotations[index], // From 90 to 0 degrees
+                    z: topLetterZs[index], // From 50 to 0 if desired
+                    marginRight: "0.02em",
+                    position: "relative",
+                    top: "-0.05em", // Slight offset to align properly
+                  }}
+                >
+                  {letter}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function About() {
   const [isHovered, setIsHovered] = useState(false);
@@ -230,16 +340,11 @@ function About() {
           </div>
         </div>
 
+
         {/* Main CONTACT heading */}
-        <SlideUpAnimation>
-          <motion.h1 className="text-[12vw] font-MonumentGroteskBold leading-none  mb-10">
-            <span>CO</span>
-            <span className="font-MonumentGroteskBoldItalic">N</span>
-            <span>TA</span>
-            <span className="font-MonumentGroteskBoldItalic">C</span>
-            <span>T</span>
-          </motion.h1>
-        </SlideUpAnimation>
+        
+        <DoubleContactHeading />
+
         {/* Two contact options */}
         <div className="w-[90vw] max-w-[1200px] flex flex-col md:flex-row mb-20">
           {/* Project option */}
