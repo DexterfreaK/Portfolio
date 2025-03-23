@@ -111,14 +111,14 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
   return (
     <motion.div
       className="home_container"
-      animate={{
-        y: [10000, 0, 0],
-      }}
-      transition={{
-        duration: 3,
-        ease: cubicBezier(0.19, 1, 0.22, 1),
-        delay: timerduration - 0.5,
-      }}
+      // animate={{
+      //   y: [1000, 0],
+      // }}
+      // transition={{
+      //   duration: 2,
+      //   ease: cubicBezier(0.19, 1, 0.22, 1),
+      //   delay: timerduration,
+      // }}
     >
       <motion.div
         className="home"
@@ -148,7 +148,6 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           textcolorWhite
         />
 
-        {/* Widget container - ensures proper spacing on mobile */}
         <div
           style={{
             position: "absolute",

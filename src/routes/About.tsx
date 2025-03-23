@@ -12,18 +12,18 @@ function About() {
   // Text options that will rotate
   const textOptions = [
     {
-      firstLine: "Systems",
-      secondLine: "Enthusiast",
+      firstLine: "SYSTEMS",
+      secondLine: "ENTHUSIAST",
       id: "systems-enthusiast",
     },
     {
-      firstLine: "Typeface",
-      secondLine: "Collector",
+      firstLine: "TYPEFACE",
+      secondLine: "COLLECTOR",
       id: "typeface-collector",
     },
     {
-      firstLine: "Movie",
-      secondLine: "Quoter",
+      firstLine: "MOVIE",
+      secondLine: "QUOTER",
       id: "movie-quoter",
     },
   ];
@@ -95,7 +95,15 @@ function About() {
         touchInertiaMultiplier: 3,
       }}
     >
-      <div className="w-full bg-white flex flex-col items-center overflow-x-hidden">
+      <motion.div
+        className="bg-[#F4F0F0] rounded-[50px] z-50 absolute w-[100svw] flex flex-col items-center overflow-x-hidden"
+        initial={{ y: "100%" }}
+        animate={{ y: "-50px" }}
+        transition={{
+          duration: 1.2,
+          ease: [0.165, 0.84, 0.44, 1],
+        }}
+      >
         {/* Bio Section */}
         <div className="w-full max-w-[1400px] flex flex-col md:flex-row items-center md:items-start py-20 px-6 md:px-12">
           {/* Image Column */}
@@ -108,7 +116,7 @@ function About() {
                 className="w-full aspect-[3/4] bg-gray-300 overflow-hidden"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 1 }}
               >
                 {/* Replace placeholder with actual image */}
                 <img
@@ -124,7 +132,7 @@ function About() {
           <div className="w-full md:w-1/2 md:pl-10">
             <div className="overflow-hidden">
               <SlideUpAnimation>
-                <p className="text-sm font-MonumentGrotesk tracking-wide">
+                <p className="text-lg font-MonumentGrotesk tracking-wide">
                   HARSHIT NAGPAL - EST 2003
                 </p>
               </SlideUpAnimation>
@@ -320,7 +328,7 @@ function About() {
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
       {/* <CursorViewProject/> */}
     </ReactLenis>
   );

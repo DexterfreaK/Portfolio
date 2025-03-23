@@ -6,11 +6,11 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import AuthorHeading from "../components/AuthorHeading";
-import inter from "../assets/interbits-assets/InterbitsBG.png";
-import studydeck from "../assets/Studydeck/StudydeckMain.png";
-import Main_sop from "../assets/SOP/Main.png";
-import SideA_sop from "../assets/SOP/SideA.png";
-import SideB_sop from "../assets/SOP/SideB.png";
+import inter from "/interbits-assets/InterbitsBG.png";
+import studydeck from "/Studydeck/StudydeckMain.png";
+import Main_sop from "/SOP/Main.png";
+import SideA_sop from "/SOP/SideA.png";
+import SideB_sop from "/SOP/SideB.png";
 import { WorkImage } from "../components/WorkImage";
 import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
 import React from "react";
@@ -512,8 +512,8 @@ function Work() {
           initial={{ y: "100%" }}
           animate={{ y: "-50px" }}
           transition={{
-            duration: 1.2,
-            ease: [0.165, 0.84, 0.44, 1],
+            duration: 2,
+            ease: cubicBezier(0.19, 1, 0.22, 1),
           }}
         >
           {/* Add the gravitational background */}

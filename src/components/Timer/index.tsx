@@ -165,7 +165,7 @@ export default function Timer({
       variants={loadingVariants}
       initial="initial"
       exit="exit"
-      style={{ position: "fixed", inset: 0, zIndex: 1 }}
+      style={{ position: "fixed", inset: 0, zIndex: 0 }}
     >
       <TimerCount timerduration={timerduration} />
     </motion.div>
