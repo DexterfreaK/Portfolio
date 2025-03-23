@@ -15,7 +15,7 @@ export default function App() {
 
   const location = useLocation();
   const [loading, setLoading] = useState(true);
-  const timerDuration = 0; // seconds
+  const timerDuration = 3.5; // seconds
 
   // 1) Simple function to get the correct component for a path
   const getComponentForPath = (path:any) => {
@@ -77,7 +77,7 @@ export default function App() {
   };
 
   // 6) On new page’s ‘enter’ completion, remove old pages
-  const handleAnimationComplete = (path) => {
+  const handleAnimationComplete = (path:any) => {
     setPages((prev) => {
       const lastPage = prev[prev.length - 1];
       if (lastPage.path === path) {

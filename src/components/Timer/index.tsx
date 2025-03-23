@@ -5,7 +5,7 @@ import {
   animate,
   cubicBezier,
 } from "framer-motion";
-import { useEffect,useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import s from "./timer.module.scss";
 import cn from "clsx";
 import SlideDownAnimation from "../SlideDown";
@@ -15,16 +15,41 @@ interface AnimatedHeaderProps {
   duration: number;
 }
 
-const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({ timerduration , duration}) => {
+const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
+  timerduration,
+  duration,
+}) => {
   const [shift, setShift] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
-  // Callback for when the slide down animations complete.
+  // Handle window resize
+  useEffect(() => {
+    // Set initial width
+    setWindowWidth(window.innerWidth);
+
+    // Update width on resize
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Calculate shift amount based on screen size
+  const getShiftAmount = () => {
+    if (windowWidth >= 1024) return -135;
+    if (windowWidth >= 768) return -100;
+    return -70;
+  };
+
+  // Callback for when the slide down animations complete
   const handleAnimationComplete = () => {
     setShift(true);
   };
 
   return (
-    <motion.div className="flex text-white font-MonumentGroteskBold text-5xl absolute bottom-[5rem] left-[5rem]">
+    <motion.div className="flex text-white font-MonumentGroteskBold text-2xl md:text-3xl lg:text-5xl absolute bottom-[2rem] md:bottom-[3rem] lg:bottom-[5rem] left-[1rem] md:left-[2rem] lg:left-[5rem]">
       <motion.div>H</motion.div>
       <SlideDownAnimation
         delay={timerduration}
@@ -36,7 +61,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({ timerduration , duratio
         {[..."arshit"].map((letter, index) => (
           <motion.span
             key={index}
-            className="author_child font-MonumentGroteskBold inline-block h-[3.5rem]"
+            className="author_child font-MonumentGroteskBold inline-block h-[1.75rem] md:h-[2.5rem] lg:h-[3.5rem]"
           >
             {letter}
           </motion.span>
@@ -44,8 +69,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({ timerduration , duratio
       </SlideDownAnimation>
       {"\u00A0"}
       <motion.div
-        // Shift the "N" element to the left by 50px when `shift` is true.
-        animate={{ x: shift ? -135 : 0 }}
+        animate={{ x: shift ? getShiftAmount() : 0 }}
         transition={{
           type: "tween",
           ease: [0.215, 0.61, 0.355, 1], // Custom cubic-bezier curve
@@ -64,7 +88,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({ timerduration , duratio
         {[..."agpal"].map((letter, index) => (
           <motion.span
             key={index}
-            className="author_child font-MonumentGroteskBold inline-block h-[3.5rem]"
+            className="author_child font-MonumentGroteskBold inline-block h-[1.75rem] md:h-[2.5rem] lg:h-[3.5rem]"
           >
             {letter}
           </motion.span>
@@ -74,13 +98,21 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({ timerduration , duratio
   );
 };
 
-
-
 export function TimerCount({ timerduration }: { timerduration: number }) {
   const count = useMotionValue(0);
   const rounded = useTransform(count, Math.round);
   const progress = useTransform(count, [0, 100], ["0%", "100%"]);
-  const heightAdjusted = useTransform(
+
+  // Create separate height transforms for different screen sizes
+  const heightAdjustedMobile = useTransform(
+    progress,
+    (value) => `calc(${value} - 3.5rem)`
+  );
+  const heightAdjustedTablet = useTransform(
+    progress,
+    (value) => `calc(${value} - 5rem)`
+  );
+  const heightAdjustedDesktop = useTransform(
     progress,
     (value) => `calc(${value} - 7.5rem)`
   );
@@ -95,58 +127,44 @@ export function TimerCount({ timerduration }: { timerduration: number }) {
 
   return (
     <>
-      <motion.div className="timer text-white font-MonumentGroteskBold text-[4.5rem] absolute top-[2.5rem] left-[5rem] cursor-wait">
+      <motion.div className="timer text-white font-MonumentGroteskBold text-2xl md:text-3xl lg:text-[4.5rem] absolute top-[1rem] md:top-[1.5rem] lg:top-[2.5rem] left-[1rem] md:left-[2rem] lg:left-[5rem] cursor-wait">
         {rounded}
       </motion.div>
+
+      {/* Mobile progress line */}
       <motion.div
         className={cn(
           s.progress_line,
-          "bg-white absolute bottom-[5rem] right-[8.5rem] w-[2px] "
+          "bg-white absolute bottom-[2rem] right-[1.5rem] w-[1px] block md:hidden"
         )}
         style={{
-          height: heightAdjusted,
+          height: heightAdjustedMobile,
         }}
       />
-      {/* <motion.div className="flex text-white font-MonumentGroteskBold text-5xl absolute bottom-[5rem] left-[5rem] ">
-        <motion.div>H</motion.div>
-        <SlideDownAnimation
-          delay={timerduration-2}
-          duration={1.5}
-          staggerChildren
-          staggerDelay={0.1}
-        >
-          {[..."arshit"].map((letter, index) => (
-            <motion.span
-              key={index}
-              className={
-                "author_child font-MonumentGroteskBold inline-block h-[3.5rem]"
-              }
-            >
-              {letter}
-            </motion.span>
-          ))}
-        </SlideDownAnimation>
-        {"\u00A0"}
-        <motion.div>N</motion.div>
-        <SlideDownAnimation
-          delay={timerduration-2}
-          duration={1.5}
-          staggerChildren
-          staggerDelay={0.1}
-        >
-          {[..."agpal"].map((letter, index) => (
-            <motion.span
-              key={index}
-              className={
-                "author_child font-MonumentGroteskBold inline-block h-[3.5rem]"
-              }
-            >
-              {letter}
-            </motion.span>
-          ))}
-        </SlideDownAnimation>
-      </motion.div> */}
-      <AnimatedHeader timerduration={1} duration={1}/>
+
+      {/* Tablet progress line */}
+      <motion.div
+        className={cn(
+          s.progress_line,
+          "bg-white absolute bottom-[3rem] right-[4rem] w-[1.5px] hidden md:block lg:hidden"
+        )}
+        style={{
+          height: heightAdjustedTablet,
+        }}
+      />
+
+      {/* Desktop progress line */}
+      <motion.div
+        className={cn(
+          s.progress_line,
+          "bg-white absolute bottom-[5rem] right-[8.5rem] w-[2px] hidden lg:block"
+        )}
+        style={{
+          height: heightAdjustedDesktop,
+        }}
+      />
+
+      <AnimatedHeader timerduration={1} duration={1} />
     </>
   );
 }
