@@ -17,18 +17,19 @@ function DoubleContactHeading() {
 
   // -- Bottom letters rotate up & come forward (z)
   const rt = (index : number) => [0.50 + index * 0.03, 0.75 + index * 0.03];
+  const rt2 = (index : number) => [0.40 + index * 0.03, 0.65 + index * 0.03];
 
   const getBottomLetterRotation = (index: number) => {
     return useTransform(
       scrollYProgress,
-      rt(index),
+      rt2(index),
       [0, 90] // Rotate from 0 to 90 degrees
     );
   };
   const getBottomLetterZ = (index: number) => {
     return useTransform(
       scrollYProgress,
-      rt(index),
+      rt2(index),
       [0, 10] // Translate Z from 0px to 50px (example range)
     );
   };
@@ -58,10 +59,10 @@ function DoubleContactHeading() {
   const topLetterZs = topletter.map((_, i) => getTopLetterZ(i));
 
   return (
-    <div className="w-full py-24 mb-20">
+    <div className="w-full ">
       <div className="relative overflow-hidden">
         {/* Main heading container with double text */}
-        <div className="flex justify-center items-center h-[25vh] md:h-[30vh] leading-[1.5]">
+        <div className="flex justify-center items-center leading-[0.55] h-[10rem]">
           <div className="relative">
             {/* Bottom row of letters that rotate up (and move forward in Z) */}
             <div className="block text-center relative">
