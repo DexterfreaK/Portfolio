@@ -15,7 +15,7 @@ export default function App() {
 
   const location = useLocation();
   const [loading, setLoading] = useState(true);
-  const timerDuration = 3.5; // seconds
+  const timerDuration = 0; // seconds
 
   // 1) Simple function to get the correct component for a path
   const getComponentForPath = (path:any) => {

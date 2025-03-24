@@ -4,20 +4,415 @@ import {
   AnimatePresence,
   useScroll,
   useTransform,
+  useAnimation,
+  useMotionValue,
 } from "framer-motion";
 import { ReactLenis } from "@studio-freight/react-lenis";
 import CursorViewProject from "../components/CursorViewProject";
 import SlideUpAnimation from "../components/SlideUp";
 import { useState, useEffect } from "react";
 import React from "react";
+
+function DoubleContactHeadingtimer() {
+  // 1) Create a motion value for our "progress"
+  const progress = useMotionValue(0);
+
+  // 2) Set up a simple timer that loops progress from 0 to 1
+  useEffect(() => {
+    let current = 0;
+    const interval = setInterval(() => {
+      // Increase progress in small increments
+      current += 0.01;
+      if (current > 1) {
+        current = 0; // Loop back to 0 after hitting 1
+      }
+      progress.set(current);
+    }, 10); // Adjust interval time to change speed of animation
+
+    // Cleanup on unmount
+    return () => clearInterval(interval);
+  }, [progress]);
+
+  const bottomLetters = "DABC".split("");
+  const topLetters = "ABCDDDDD".split("");
+
+  // --- Adjust these ranges to tweak the timing of each letter
+  const rt = (index: number) => [0.5 + index * 0.03, 0.75 + index * 0.03];
+  const rt2 = (index: number) => [0.4 + index * 0.03, 0.65 + index * 0.03];
+
+  // --- Bottom letters rotate up & come forward (z)
+  const getBottomLetterRotation = (index: number) =>
+    useTransform(progress, rt2(index), [0, 90]);
+  const getBottomLetterZ = (index: number) =>
+    useTransform(progress, rt2(index), [0, 10]);
+
+  // --- Top letters rotate down & move backward (z)
+  const getTopLetterRotation = (index: number) =>
+    useTransform(progress, rt(index), [90, 0]);
+  const getTopLetterZ = (index: number) =>
+    useTransform(progress, rt(index), [10, 0]);
+
+  // Create arrays of transforms
+  const topLetterRotations = topLetters.map((_, i) => getTopLetterRotation(i));
+  const topLetterZs = topLetters.map((_, i) => getTopLetterZ(i));
+  const bottomLetterRotations = bottomLetters.map((_, i) =>
+    getBottomLetterRotation(i)
+  );
+  const bottomLetterZs = bottomLetters.map((_, i) => getBottomLetterZ(i));
+
+  // Calculate the maximum width needed for both rows
+  const maxLetters = Math.max(topLetters.length, bottomLetters.length);
+
+  // Create arrays of the correct length with empty spaces for positioning
+  const paddedTopLetters = [...topLetters];
+  const paddedBottomLetters = [...bottomLetters];
+
+  while (paddedTopLetters.length < maxLetters) {
+    paddedTopLetters.push("");
+  }
+  while (paddedBottomLetters.length < maxLetters) {
+    paddedBottomLetters.push("");
+  }
+
+  return (
+    <div className="w-full">
+      <div className="relative overflow-hidden">
+        {/* Main heading container with double text */}
+        <div className="flex justify-center items-center leading-[0.55] h-[10rem]">
+          <div className="relative" style={{ width: "max-content" }}>
+            {/* Top row of letters */}
+            <div className="block text-center relative whitespace-nowrap">
+              {paddedTopLetters.map((letter, index) => (
+                <motion.div
+                  key={`top-${index}`}
+                  style={{
+                    fontSize: "10vw",
+                    fontFamily: "Monument Grotesk Bold",
+                    fontWeight: "bold",
+                    display: "inline-block",
+                    transformOrigin: "bottom",
+                    transformStyle: "preserve-3d",
+                    rotateX:
+                      index < topLetterRotations.length
+                        ? topLetterRotations[index]
+                        : 0,
+                    z: index < topLetterZs.length ? topLetterZs[index] : 0,
+                    marginRight: "0.02em",
+                    width: letter === "" ? "0.5em" : "auto",
+                    visibility: letter === "" ? "hidden" : "visible",
+                  }}
+                >
+                  {letter || " "}
+                </motion.div>
+              ))}
+            </div>
+            {/* Bottom row of letters */}
+            <div className="block text-center absolute left-0 bottom-0 whitespace-nowrap">
+              {paddedBottomLetters.map((letter, index) => (
+                <motion.div
+                  key={`bottom-${index}`}
+                  style={{
+                    fontSize: "10vw",
+                    fontFamily: "Monument Grotesk Bold",
+                    fontWeight: "bold",
+                    display: "inline-block",
+                    transformOrigin: "top",
+                    transformStyle: "preserve-3d",
+                    rotateX:
+                      index < bottomLetterRotations.length
+                        ? bottomLetterRotations[index]
+                        : 0,
+                    z:
+                      index < bottomLetterZs.length ? bottomLetterZs[index] : 0,
+                    marginRight: "0.02em",
+                    position: "relative",
+                    top: "-0.05em",
+                    width: letter === "" ? "0.5em" : "auto",
+                    visibility: letter === "" ? "hidden" : "visible",
+                  }}
+                >
+                  {letter || " "}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function DoubleContactHeadingtimer2() {
+  // Define an array of words to cycle through
+  const words = ["ABCDDDDD", "DEF", "GHIJ"];
+
+  // 1) Create motion values for our "progress" and current word index
+  const progress = useMotionValue(0);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [nextWordIndex, setNextWordIndex] = useState(1);
+
+  // Get current word and next word
+  const currentWord = words[currentWordIndex];
+  const nextWord = words[nextWordIndex];
+
+  // Split into letters for animation
+  const bottomLetters = currentWord.split("");
+  const topLetters = nextWord.split("");
+
+  // Calculate the maximum length needed for both rows
+  const maxLength = Math.max(...words.map((word) => word.length));
+
+  // Create arrays of the correct length with empty spaces for positioning
+  const paddedTopLetters = [...topLetters];
+  const paddedBottomLetters = [...bottomLetters];
+
+  while (paddedTopLetters.length < maxLength) {
+    paddedTopLetters.push("");
+  }
+  while (paddedBottomLetters.length < maxLength) {
+    paddedBottomLetters.push("");
+  }
+
+  // 2) Set up a timer that cycles through the words
+  useEffect(() => {
+    let current = 0;
+    const interval = setInterval(() => {
+      // Increase progress in small increments
+      current += 0.01;
+
+      // When animation completes, change words
+      if (current > 1) {
+        current = 0; // Reset progress
+
+        // Update word indices
+        const newCurrentIndex = (currentWordIndex + 1) % words.length;
+        const newNextIndex = (newCurrentIndex + 1) % words.length;
+
+        setCurrentWordIndex(newCurrentIndex);
+        setNextWordIndex(newNextIndex);
+      }
+
+      progress.set(current);
+    }, 25); // Adjust interval time to change speed of animation
+
+    // Cleanup on unmount
+    return () => clearInterval(interval);
+  }, [progress, currentWordIndex, words.length]);
+
+  // --- Adjust these ranges to tweak the timing of each letter
+  const rt = (index: number) => [0.5 + index * 0.03, 0.75 + index * 0.03];
+  const rt2 = (index: number) => [0.4 + index * 0.03, 0.65 + index * 0.03];
+
+  // --- Bottom letters rotate up & come forward (z)
+  const getBottomLetterRotation = (index: number) =>
+    useTransform(progress, rt2(index), [0, 90]);
+  const getBottomLetterZ = (index: number) =>
+    useTransform(progress, rt2(index), [0, 10]);
+
+  // --- Top letters rotate down & move backward (z)
+  const getTopLetterRotation = (index: number) =>
+    useTransform(progress, rt(index), [90, 0]);
+  const getTopLetterZ = (index: number) =>
+    useTransform(progress, rt(index), [10, 0]);
+
+  // Create arrays of transforms
+  const topLetterRotations = paddedTopLetters.map((_, i) =>
+    getTopLetterRotation(i)
+  );
+  const topLetterZs = paddedTopLetters.map((_, i) => getTopLetterZ(i));
+  const bottomLetterRotations = paddedBottomLetters.map((_, i) =>
+    getBottomLetterRotation(i)
+  );
+  const bottomLetterZs = paddedBottomLetters.map((_, i) => getBottomLetterZ(i));
+
+  return (
+    <div className="w-[100rem]">
+        <div className="flex justify-center items-center leading-[0.7] h-[20rem]">
+          <div className="relative" style={{ width: "max-content" }}>
+            {/* Top row of letters (next word) */}
+            <div className="block text-center absolute left-0 bottom-0 whitespace-nowrap">
+              {paddedTopLetters.map((letter, index) => (
+                <motion.div
+                  key={`top-${index}-${nextWordIndex}`}
+                  style={{
+                    fontSize: "10vw",
+                    fontFamily: "Monument Grotesk Bold",
+                    fontWeight: "bold",
+                    display: "inline-block",
+                    transformOrigin: "bottom",
+                    transformStyle: "preserve-3d",
+                    rotateX: topLetterRotations[index],
+                    z: topLetterZs[index],
+                    marginRight: "0.02em",
+                    width: letter === "" ? "0.5em" : "auto",
+                    visibility: letter === "" ? "hidden" : "visible",
+                  }}
+                >
+                  {letter || " "}
+                </motion.div>
+              ))}
+            </div>
+            {/* Bottom row of letters (current word) */}
+            <div className="block text-center absolute left-0 bottom-0 whitespace-nowrap">
+              {paddedBottomLetters.map((letter, index) => (
+                <motion.div
+                  key={`bottom-${index}-${currentWordIndex}`}
+                  style={{
+                    fontSize: "10vw",
+                    fontFamily: "Monument Grotesk Bold",
+                    fontWeight: "bold",
+                    display: "inline-block",
+                    transformOrigin: "top",
+                    transformStyle: "preserve-3d",
+                    rotateX: bottomLetterRotations[index],
+                    z: bottomLetterZs[index],
+                    marginRight: "0.02em",
+                    position: "relative",
+                    // top: "-0.05em",
+                    width: letter === "" ? "0.5em" : "auto",
+                    visibility: letter === "" ? "hidden" : "visible",
+                  }}
+                >
+                  {letter || " "}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+    </div>
+  );
+}
+
+function DCHT() {
+  const words = ["ABCDDDDD", "DEF", "GHIJ"];
+
+  // 1) Create motion values for our "progress" and current word index
+  const progress = useMotionValue(0);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [nextWordIndex, setNextWordIndex] = useState(1);
+
+  // Get current word and next word
+  const currentWord = words[currentWordIndex];
+  const nextWord = words[nextWordIndex];
+
+  // Split into letters for animation
+  const bottomLetters = currentWord.split("");
+  const topLetters = nextWord.split("");
+
+  // Calculate the maximum length needed for both rows
+  const maxLength = Math.max(...words.map((word) => word.length));
+
+  // Create arrays of the correct length with empty spaces for positioning
+  const paddedTopLetters = [...topLetters];
+  const paddedBottomLetters = [...bottomLetters];
+  while (paddedTopLetters.length < maxLength) paddedTopLetters.push("");
+  while (paddedBottomLetters.length < maxLength) paddedBottomLetters.push("");
+
+  // 2) Set up a timer that cycles through the words
+  useEffect(() => {
+    let current = 0;
+    const interval = setInterval(() => {
+      current += 0.01;
+      if (current > 1) {
+        current = 0;
+        const newCurrentIndex = (currentWordIndex + 1) % words.length;
+        const newNextIndex = (newCurrentIndex + 1) % words.length;
+        setCurrentWordIndex(newCurrentIndex);
+        setNextWordIndex(newNextIndex);
+      }
+      progress.set(current);
+    }, 25);
+
+    return () => clearInterval(interval);
+  }, [progress, currentWordIndex, words.length]);
+
+  // --- Adjust these ranges to tweak the timing of each letter
+  const rt = (index:number) => [0.5 + index * 0.03, 0.75 + index * 0.03];
+  const rt2 = (index: number) => [0.4 + index * 0.03, 0.65 + index * 0.03];
+
+  // --- Bottom letters rotate up & come forward (z)
+  const getBottomLetterRotation = (index: number) =>
+    useTransform(progress, rt2(index), [0, 90]);
+  const getBottomLetterZ = (index: number) =>
+    useTransform(progress, rt2(index), [0, 10]);
+
+  // --- Top letters rotate down & move backward (z)
+  const getTopLetterRotation = (index: number) =>
+    useTransform(progress, rt(index), [90, 0]);
+  const getTopLetterZ = (index: number) =>
+    useTransform(progress, rt(index), [10, 0]);
+
+  // Create arrays of transforms
+  const topLetterRotations = paddedTopLetters.map((_, i) =>
+    getTopLetterRotation(i)
+  );
+  const topLetterZs = paddedTopLetters.map((_, i) => getTopLetterZ(i));
+  const bottomLetterRotations = paddedBottomLetters.map((_, i) =>
+    getBottomLetterRotation(i)
+  );
+  const bottomLetterZs = paddedBottomLetters.map((_, i) => getBottomLetterZ(i));
+
+  return (
+    /**
+     * You can position .relative and .inline-block however you like.
+     * For instance, wrap this in <div className="flex justify-center">,
+     * or remove inline-block if you prefer a full-width container, etc.
+     */
+    <div className="relative inline-block">
+      {/* Next word (top letters) */}
+      <div className="absolute left-0 bottom-0 whitespace-nowrap">
+        {paddedTopLetters.map((letter, index) => (
+          <motion.span
+            key={`top-${index}-${nextWordIndex}`}
+            style={{
+              transformOrigin: "bottom",
+              transformStyle: "preserve-3d",
+              rotateX: topLetterRotations[index],
+              z: topLetterZs[index],
+            }}
+            className={`
+              inline-block 
+              mr-[0.02em]
+              ${letter === "" ? "invisible w-[0.5em]" : ""}
+            `}
+          >
+            {letter || " "}
+          </motion.span>
+        ))}
+      </div>
+
+      {/* Current word (bottom letters) */}
+      <div className="absolute left-0 bottom-0 whitespace-nowrap">
+        {paddedBottomLetters.map((letter, index) => (
+          <motion.span
+            key={`bottom-${index}-${currentWordIndex}`}
+            style={{
+              transformOrigin: "top",
+              transformStyle: "preserve-3d",
+              rotateX: bottomLetterRotations[index],
+              z: bottomLetterZs[index],
+            }}
+            className={`
+              inline-block 
+              mr-[0.02em]
+              ${letter === "" ? "invisible w-[0.5em]" : ""}
+            `}
+          >
+            {letter || " "}
+          </motion.span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function DoubleContactHeading() {
   const { scrollYProgress } = useScroll();
-  const bottomletter = "CONTACT".split("");
-  const topletter = "CONTACT".split("");
+  const bottomletter = "Get In Touch".split("");
+  const topletter = "Get In Touch".split("");
 
   // -- Bottom letters rotate up & come forward (z)
-  const rt = (index : number) => [0.50 + index * 0.03, 0.75 + index * 0.03];
-  const rt2 = (index : number) => [0.40 + index * 0.03, 0.65 + index * 0.03];
+  const rt = (index: number) => [0.5 + index * 0.03, 0.75 + index * 0.03];
+  const rt2 = (index: number) => [0.4 + index * 0.03, 0.65 + index * 0.03];
 
   const getBottomLetterRotation = (index: number) => {
     return useTransform(
@@ -26,11 +421,12 @@ function DoubleContactHeading() {
       [0, 90] // Rotate from 0 to 90 degrees
     );
   };
+
   const getBottomLetterZ = (index: number) => {
     return useTransform(
       scrollYProgress,
       rt2(index),
-      [0, 10] // Translate Z from 0px to 50px (example range)
+      [0, 10] // Translate Z from 0px to 10px
     );
   };
 
@@ -42,53 +438,51 @@ function DoubleContactHeading() {
       [90, 0] // Rotate from 90 down to 0 degrees
     );
   };
+
   const getTopLetterZ = (index: number) => {
     return useTransform(
       scrollYProgress,
       rt(index),
-      [10, 0] // Translate Z from 50px to 0px (example range)
+      [10, 0] // Translate Z from 10px to 0px
     );
   };
 
   // Map over each letter to create arrays of motion values
+  const topLetterRotations = topletter.map((_, i) => getTopLetterRotation(i));
+
+  const topLetterZs = topletter.map((_, i) => getTopLetterZ(i));
+
   const bottomLetterRotations = bottomletter.map((_, i) =>
     getBottomLetterRotation(i)
   );
+
   const bottomLetterZs = bottomletter.map((_, i) => getBottomLetterZ(i));
-  const topLetterRotations = topletter.map((_, i) => getTopLetterRotation(i));
-  const topLetterZs = topletter.map((_, i) => getTopLetterZ(i));
+
+  // Calculate the maximum width needed for both rows
+  const maxLetters = Math.max(topletter.length, bottomletter.length);
+
+  // Create arrays of the correct length with empty spaces for positioning
+  const paddedTopLetters = [...topletter];
+  const paddedBottomLetters = [...bottomletter];
+
+  // Fill with empty strings to match the maximum length
+  while (paddedTopLetters.length < maxLetters) {
+    paddedTopLetters.push("");
+  }
+
+  while (paddedBottomLetters.length < maxLetters) {
+    paddedBottomLetters.push("");
+  }
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <div className="relative overflow-hidden">
         {/* Main heading container with double text */}
         <div className="flex justify-center items-center leading-[0.55] h-[10rem]">
-          <div className="relative">
-            {/* Bottom row of letters that rotate up (and move forward in Z) */}
-            <div className="block text-center relative">
-              {topletter.map((letter, index) => (
-                <motion.div
-                  key={`bottom-${index}`}
-                  style={{
-                    fontSize: "10vw",
-                    fontFamily: "Monument Grotesk Bold",
-                    fontWeight: "bold",
-                    display: "inline-block",
-                    transformOrigin: "bottom",
-                    transformStyle: "preserve-3d",
-                    rotateX: bottomLetterRotations[index], // From 0 to 90 degrees
-                    z: bottomLetterZs[index], // From 0 to some positive value
-                    marginRight: "0.02em",
-                  }}
-                >
-                  {letter}
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Top row of letters that rotate down (and move from z=50 back to z=0 if desired) */}
-            <div className="block text-center absolute left-0 bottom-0 ">
-              {bottomletter.map((letter, index) => (
+          <div className="relative" style={{ width: "max-content" }}>
+            {/* Top row of letters */}
+            <div className="block text-center relative whitespace-nowrap">
+              {paddedTopLetters.map((letter, index) => (
                 <motion.div
                   key={`top-${index}`}
                   style={{
@@ -96,16 +490,49 @@ function DoubleContactHeading() {
                     fontFamily: "Monument Grotesk Bold",
                     fontWeight: "bold",
                     display: "inline-block",
-                    transformOrigin: "top",
+                    transformOrigin: "bottom",
                     transformStyle: "preserve-3d",
-                    rotateX: topLetterRotations[index], // From 90 to 0 degrees
-                    z: topLetterZs[index], // From 50 to 0 if desired
+                    rotateX:
+                      index < topLetterRotations.length
+                        ? topLetterRotations[index]
+                        : 0,
+                    z: index < topLetterZs.length ? topLetterZs[index] : 0,
                     marginRight: "0.02em",
-                    position: "relative",
-                    top: "-0.05em", // Slight offset to align properly
+                    width: letter === "" ? "0.5em" : "auto", // Give invisible letters width
+                    visibility: letter === "" ? "hidden" : "visible", // Hide but preserve space
                   }}
                 >
-                  {letter}
+                  {letter || " "}
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Bottom row of letters */}
+            <div className="block text-center absolute left-0 bottom-0 whitespace-nowrap">
+              {paddedBottomLetters.map((letter, index) => (
+                <motion.div
+                  key={`bottom-${index}`}
+                  style={{
+                    fontSize: "10vw",
+                    fontFamily: "Monument Grotesk Bold",
+                    fontWeight: "bold",
+                    display: "inline-block",
+                    transformOrigin: "top",
+                    transformStyle: "preserve-3d",
+                    rotateX:
+                      index < bottomLetterRotations.length
+                        ? bottomLetterRotations[index]
+                        : 0,
+                    z:
+                      index < bottomLetterZs.length ? bottomLetterZs[index] : 0,
+                    marginRight: "0.02em",
+                    position: "relative",
+                    top: "-0.05em",
+                    width: letter === "" ? "0.5em" : "auto", // Give invisible letters width
+                    visibility: letter === "" ? "hidden" : "visible", // Hide but preserve space
+                  }}
+                >
+                  {letter || " "}
                 </motion.div>
               ))}
             </div>
@@ -128,6 +555,11 @@ function About() {
       id: "systems-enthusiast",
     },
     {
+      firstLine: "CAFFEINE",
+      secondLine: "MAESTRO",
+      id: "caffeine-maestro",
+    },
+    {
       firstLine: "TYPEFACE",
       secondLine: "COLLECTOR",
       id: "typeface-collector",
@@ -137,6 +569,11 @@ function About() {
       secondLine: "QUOTER",
       id: "movie-quoter",
     },
+    {
+      firstLine: "ROYAL WITH",
+      secondLine: "CHEESE",
+      id: "royal-with-cheese",
+    },
   ];
 
   // Auto rotate text every 5 seconds
@@ -145,7 +582,7 @@ function About() {
       setCurrentTextIndex((prevIndex) =>
         prevIndex === textOptions.length - 1 ? 0 : prevIndex + 1
       );
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
@@ -340,12 +777,8 @@ function About() {
             </SlideUpAnimation>
           </div>
         </div>
-
-
         {/* Main CONTACT heading */}
-        
-        <DoubleContactHeading />
-
+        <DoubleContactHeading/>
         {/* Two contact options */}
         <div className="w-[90vw] max-w-[1200px] flex flex-col md:flex-row mb-20">
           {/* Project option */}
