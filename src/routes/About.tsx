@@ -12,6 +12,7 @@ import CursorViewProject from "../components/CursorViewProject";
 import SlideUpAnimation from "../components/SlideUp";
 import { useState, useEffect } from "react";
 import React from "react";
+import AuthorHeading from "../components/AuthorHeading";
 
 function DoubleContactHeadingtimer() {
   // 1) Create a motion value for our "progress"
@@ -778,7 +779,7 @@ function About() {
           </div>
         </div>
         {/* Main CONTACT heading */}
-        <DoubleContactHeading/>
+        <DoubleContactHeading />
         {/* Two contact options */}
         <div className="w-[90vw] max-w-[1200px] flex flex-col md:flex-row mb-20">
           {/* Project option */}

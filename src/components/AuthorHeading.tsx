@@ -69,7 +69,7 @@ export default function AuthorHeading({
     >
       {/* For mobile view (default) text is larger, on md and up it's smaller */}
       <motion.div
-        className="font-MonumentGroteskRegular text-[23vw] md:text-[12vw] leading-[9vw] md:leading-[4.5vw]"
+        className="font-MonumentGroteskRegular text-[22vw] md:text-[12vw] leading-[9vw] md:leading-[4.5vw] font-black"
         transition={{
           staggerChildren: 1,
         }}
@@ -81,7 +81,7 @@ export default function AuthorHeading({
         ))}
       </motion.div>
       {/* Adjust the subparagraph text size similarly */}
-      <SlideUpAnimation delay={timerduration+1} duration={5}>
+      <SlideUpAnimation delay={timerduration + 1} duration={5}>
         <motion.div className="text-[2vw] md:text-[.8vw] leading-[2.1vw] md:leading-[1.5vw] whitespace-normal w-[30vw]">
           {subparagraph}
         </motion.div>

@@ -123,16 +123,16 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
       <motion.div
         className="home"
         animate={{
-          scale: [1, 1, 0.96],
+          scale: [1, 1, 0.97],
           borderRadius: ["0px", "0px", "15px"],
-          backgroundPosition: ["40% 20%", "99% 99%", "99% 40%", "40% 20%"],
+          // backgroundPosition: ["40% 20%", "99% 99%", "99% 40%", "40% 20%"],
         }}
         transition={{
-          backgroundPosition: {
-            repeat: Infinity,
-            duration: 100,
-            ease: "easeInOut",
-          },
+          // backgroundPosition: {
+          //   repeat: Infinity,
+          //   duration: 100,
+          //   ease: "easeInOut",
+          // },
           duration: 2,
           delay: timerduration,
           ease: cubicBezier(0.17, 0.67, 0.32, 0.86),
@@ -142,6 +142,9 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           overflow: "hidden",
         }}
       >
+        <video id="myVideo" autoPlay muted loop>
+          <source src="./intro.mp4" type="video/mp4" />
+        </video>
         <AuthorHeading
           timerduration={timerduration}
           title={["harshit", "nagpal"]}
