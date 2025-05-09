@@ -1,38 +1,46 @@
 import Parser from 'rss-parser';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-const parser = new Parser();
+type LetterboxdItem = {
+  title:            string;              // e.g. "Glengarry Glen Ross, 1992 - ★★★★"
+  link:             string;
+  isoDate?:         string;              // supplied by rss-parser if <pubDate> exists
+  'letterboxd:watchedDate'?: string;
+  'letterboxd:memberRating'?: string;
+  'content:encoded'?: string;
+};
+
+const parser = new Parser<{}, LetterboxdItem>();
 
 export default async function handler(_: VercelRequest, res: VercelResponse) {
-//   const username = process.env.LETTERBOXD_USER;
-//   if (!username) {
-//     return res.status(500).json({ error: 'missing LETTERBOXD_USER env var' });
-//   }
+  // const username = process.env.LETTERBOXD_USER;
+  // if (!username) {
+  //   return res.status(500).json({ error: 'missing LETTERBOXD_USER env var' });
+  // }
+  const username = 'dexterfreak'
+  // 1 — fetch & parse the public RSS
+  const feed = await parser.parseURL(`https://letterboxd.com/${username}/rss/`);
+  const latest = feed.items[0];                     // FIRST <item>
+  if (!latest) return res.status(200).json(null);
 
-  // Public RSS endpoint that Letterboxd exposes for every profile
-  const feed = await parser.parseURL(`https://letterboxd.com/dexterfreak/rss/`);
-  const latest = feed.items.find((i) =>
-    i.categories?.includes('Diary entry'),
-  );
-
-  if (!latest) return res.status(200).json(null); // no public diaries yet
-
-  // Grab the first <img src="…"> inside <content:encoded>
+  // 2 — pull the poster URL from the HTML in <content:encoded>
   const poster =
-    /<img[^>]+src="([^"]+)"/.exec(
-      (latest as any)['content:encoded'] ?? '',
-    )?.[1] || '';
+    /<img[^>]+src="([^"]+)"/.exec(latest['content:encoded'] ?? '')?.[1] || '';
 
+  // 3 — strip the star-rating suffix from <title>
+  const cleanTitle = latest.title.replace(/\s*-\s*★+.?$/, '').trim();
+
+  // 4 — build the JSON payload
   res.setHeader(
     'Cache-Control',
-    // 10 min edge-TTL, stale responses are revalidated in the background
-    's-maxage=600, stale-while-revalidate',
-  ); /* recommended by Vercel’s cache docs :contentReference[oaicite:0]{index=0} */
+    's-maxage=600, stale-while-revalidate'           // 10 min edge-cache
+  );
 
   res.status(200).json({
-    title: latest.title,           // “Past Lives (2023)”
-    watchedDate: latest.isoDate,   // ISO-8601 string
-    link: latest.link,
+    title:        cleanTitle,                       // "Glengarry Glen Ross, 1992"
+    watchedDate:  latest['letterboxd:watchedDate'] || latest.isoDate,
+    rating:       latest['letterboxd:memberRating'],// "4.0"
+    link:         latest.link,
     poster,
   });
 }
