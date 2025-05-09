@@ -69,7 +69,7 @@ export default function AuthorHeading({
     >
       {/* For mobile view (default) text is larger, on md and up it's smaller */}
       <motion.div
-        className="font-MonumentGroteskRegular text-[22vw] md:text-[12vw] leading-[9vw] md:leading-[4.5vw] font-black"
+        className="font-MonumentGroteskRegular text-[22vw] md:text-[12vw] leading-[9vw] md:leading-[4.5vw]"
         transition={{
           staggerChildren: 1,
         }}

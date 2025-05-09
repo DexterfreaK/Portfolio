@@ -14,6 +14,48 @@ import { useState, useEffect } from "react";
 import React from "react";
 import AuthorHeading from "../components/AuthorHeading";
 
+type Film = {
+  title: string;
+  watchedDate: string;
+  link: string;
+  poster: string;
+} | null;
+
+
+function LatestFilm() {
+  const [film, setFilm] = useState<Film>(null);
+
+  useEffect(() => {
+    fetch("/api/latest-film")
+      .then((r) => r.json())
+      .then(setFilm)
+      .catch(() => setFilm(null));
+  }, []);
+
+  if (!film) return <p>No diary entries yet.</p>;
+
+  return (
+    <a href={film.link} target="_blank" rel="noopener noreferrer">
+      {film.poster && (
+        <img
+          src={film.poster}
+          alt={film.title}
+          width={200}
+          height={300}
+          style={{ borderRadius: 8 }}
+        />
+      )}
+      <div style={{ marginTop: 8 }}>
+        <strong>{film.title}</strong>
+        <br />
+        Watched{" "}
+        {new Date(film.watchedDate).toLocaleDateString(undefined, {
+          dateStyle: "medium",
+        })}
+      </div>
+    </a>
+  );
+}
 function DoubleContactHeadingtimer() {
   // 1) Create a motion value for our "progress"
   const progress = useMotionValue(0);
@@ -406,6 +448,8 @@ function DCHT() {
   );
 }
 
+
+
 function DoubleContactHeading() {
   const { scrollYProgress } = useScroll();
   const bottomletter = "Get In Touch".split("");
@@ -479,6 +523,7 @@ function DoubleContactHeading() {
     <div className="w-full">
       <div className="relative overflow-hidden">
         {/* Main heading container with double text */}
+        <LatestFilm/>
         <div className="flex justify-center items-center leading-[0.55] h-[10rem]">
           <div className="relative" style={{ width: "max-content" }}>
             {/* Top row of letters */}
@@ -655,30 +700,8 @@ function About() {
       >
         {/* Bio Section */}
         <div className="w-full max-w-[1400px] flex flex-col md:flex-row items-center md:items-start py-20 px-6 md:px-12">
-          {/* Image Column */}
-          <div className="w-full md:w-1/2 mb-10 md:mb-0 md:pr-10">
-            <div className="relative">
-              <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
-                ME
-              </div>
-              <motion.div
-                className="w-full aspect-[3/4] bg-gray-300 overflow-hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                {/* Replace placeholder with actual image */}
-                <img
-                  src="/profile.jpg"
-                  alt="Harshit Nagpal"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            </div>
-          </div>
-
           {/* Text Column */}
-          <div className="w-full md:w-1/2 md:pl-10">
+          <div className="w-full md:w-7/12 md:pr-10">
             <div className="overflow-hidden">
               <SlideUpAnimation>
                 <p className="text-lg font-MonumentGrotesk tracking-wide">
@@ -755,28 +778,98 @@ function About() {
             </div>
 
             <SlideUpAnimation staggerChildren={true} staggerDelay={0.1}>
-              <motion.p className="text-lg md:text-xl font-MonumentGrotesk mb-6">
-                A designer who thinks "multi-disciplinary" is a buzzword and
-                wonders why we write bios in third-person.
+              <motion.p className="text-lg md:text-xl font-MonumentGroteskRegular mb-6">
+                Veniam consectetur ut eu consectetur ea aliqua aliquip mollit
+                exercitation. Est anim laboris et Lorem pariatur cupidatat id
+                laborum est anim. Non ullamco dolor voluptate exercitation elit
+                Lorem commodo ex Lorem ad elit reprehenderit et deserunt. Cillum
+                nisi ipsum in reprehenderit eu enim proident enim voluptate.
+                Officia magna eiusmod dolore tempor aliquip nostrud in tempor
+                anim aliquip aute pariatur ut.
               </motion.p>
-              <motion.p className="text-base font-MonumentGrotesk mb-6">
-                I've been designing brands and digital experiences for almost a
-                decade, approaching each project with equal parts strategy and
-                style. Currently living in San Diego, CA, and working with the
-                talented team at Five&Done in Orange County.
+              <motion.p className="text-base font-MonumentGroteskRegular mb-6">
+                Veniam consectetur ut eu consectetur ea aliqua aliquip mollit
+                exercitation. Est anim laboris et Lorem pariatur cupidatat id
+                laborum est anim. Non ullamco dolor voluptate exercitation elit
+                Lorem commodo ex Lorem ad elit reprehenderit et deserunt. Cillum
+                nisi ipsum in reprehenderit eu enim proident enim voluptate.
+                Officia magna eiusmod dolore tempor aliquip nostrud in tempor
+                anim aliquip aute pariatur ut.
               </motion.p>
-              <motion.p className="text-base font-MonumentGrotesk mb-6">
-                When I'm not photosynthesizing in the warm glow of my computer
-                screen, you can find me reading an old book, reorganizing my
-                living space (again), and snacking on an unhealthy amount of
-                Goldfish and trail mix.
+              <motion.p className="text-base font-MonumentGroteskRegular mb-6">
+                Veniam consectetur ut eu consectetur ea aliqua aliquip mollit
+                exercitation. Est anim laboris et Lorem pariatur cupidatat id
+                laborum est anim. Non ullamco dolor voluptate exercitation elit
+                Lorem commodo ex Lorem ad elit reprehenderit et deserunt. Cillum
+                nisi ipsum in reprehenderit eu enim proident enim voluptate.
+                Officia magna eiusmod dolore tempor aliquip nostrud in tempor
+                anim aliquip aute pariatur ut.
               </motion.p>
-              <motion.p className="text-base font-MonumentGrotesk">
-                If you have any exciting projects to talk about, or just want to
-                be friends, feel free to hit me up.
+              <motion.p className="text-base font-MonumentGroteskRegular">
+                Veniam consectetur ut eu consectetur ea aliqua aliquip mollit
+                exercitation. Est anim laboris et Lorem pariatur cupidatat id
+                laborum est anim. Non ullamco dolor voluptate exercitation elit
+                Lorem commodo ex Lorem ad elit reprehenderit et deserunt. Cillum
+                nisi ipsum in reprehenderit eu enim proident enim voluptate.
+                Officia magna eiusmod dolore tempor aliquip nostrud in tempor
+                anim aliquip aute pariatur ut.
               </motion.p>
             </SlideUpAnimation>
           </div>
+
+          {/* Image Column */}
+          <div className="w-full md:w-5/12 mb-10 md:mb-0 md:pl-10">
+            <div className="relative">
+              <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
+                ME
+              </div>
+              <motion.div
+                className="w-full aspect-[3/4] bg-gray-300 overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              >
+                {/* Replace placeholder with actual image */}
+                <img
+                  src="/profile.jpg"
+                  alt="Harshit Nagpal"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+        <div className="SomeInfo p-10 font-MonumentGroteskRegular">
+          <SlideUpAnimation staggerChildren={true} staggerDelay={0.1}>
+            <motion.p className="text-lg md:text-xl font-MonumentGrotesk mb-6">
+              Aliqua adipisicing dolor et. Laborum incididunt labore qui
+              excepteur enim sit minim ut. Aliquip incididunt tempor cillum
+              velit et tempor. Amet dolore labore nulla dolore occaecat esse
+              nostrud. Cillum aute proident commodo. Elit dolor nostrud ullamco
+              elit laborum eu sint et deserunt officia elit id. Ut velit eu
+              fugiat excepteur commodo eiusmod quis.
+            </motion.p>
+            <motion.p className="text-base font-MonumentGrotesk mb-6">
+              Aliqua adipisicing dolor et. Laborum incididunt labore qui
+              excepteur enim sit minim ut. Aliquip incididunt tempor cillum
+              velit et tempor. Amet dolore labore nulla dolore occaecat esse
+              nostrud. Cillum aute proident commodo. Elit dolor nostrud ullamco
+              elit laborum eu sint et deserunt officia elit id. Ut velit eu
+              fugiat excepteur commodo eiusmod quis.
+            </motion.p>
+            <motion.p className="text-base font-MonumentGrotesk mb-6">
+              Aliqua adipisicing dolor et. Laborum incididunt labore qui
+              excepteur enim sit minim ut. Aliquip incididunt tempor cillum
+              velit et tempor. Amet dolore labore nulla dolore occaecat esse
+              nostrud. Cillum aute proident commodo. Elit dolor nostrud ullamco
+              elit laborum eu sint et deserunt officia elit id. Ut velit eu
+              fugiat excepteur commodo eiusmod quis.
+            </motion.p>
+            <motion.p className="text-base font-MonumentGrotesk">
+              If you have any exciting projects to talk about, or just want to
+              be friends, feel free to hit me up.
+            </motion.p>
+          </SlideUpAnimation>
         </div>
         {/* Main CONTACT heading */}
         <DoubleContactHeading />

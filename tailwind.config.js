@@ -18,6 +18,7 @@ export default {
         MonumentGroteskMono: ["Monument Grotesk Mono", "system-ui"],
         MonumentGroteskRegular: ["Monument Grotesk Regular", "system-ui"],
         MonumentGroteskSemiMono: ["Monument Grotesk Semi Mono", "system-ui"],
+        IntegralCFHeavy: ["Integral CF Heavy", "system-ui"],
       },
     },
   },
