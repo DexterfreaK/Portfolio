@@ -3,6 +3,75 @@ import AuthorHeading from "./AuthorHeading";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 import { easeIn } from "framer-motion/dom";
 import React from "react";
+import { useState, useEffect } from "react";
+
+type Film = {
+  title: string;
+  watchedDate: string;
+  link: string;
+  poster: string;
+} | null;
+
+
+function LatestFilm() {
+  const [film, setFilm] = useState<Film>(null);
+  const isMobile = useResponsiveLayout();
+  useEffect(() => {
+    fetch("/api/latest-film")
+      .then((r) => r.json())
+      .then(setFilm)
+      .catch(() => setFilm(null));
+  }, []);
+
+  return (
+    // <a href={film.link} target="_blank" rel="noopener noreferrer">
+    //   {film.poster && (
+    //     <img
+    //       src={film.poster}
+    //       alt={film.title}
+    //       width={200}
+    //       height={300}
+    //       style={{ borderRadius: 8 }}
+    //     />
+    //   )}
+    //   <div style={{ marginTop: 8 }}>
+
+    //   </div>
+    // </a>
+
+    <motion.div
+      className="info-widget"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 3.5, duration: 1 }}
+      style={{
+        position: "absolute",
+        right: "30px",
+        bottom: isMobile ? "100px" : "15px",
+        color: "white",
+        textShadow: "0 1px 3px rgba(0,0,0,0.2)",
+        textAlign: "right",
+        fontSize: isMobile ? "11px" : "14px",
+        opacity: 0.9,
+        zIndex: 10,
+      }}
+    >
+      {film ? (
+        <div>
+          <strong>{film.title}</strong>
+          <br />
+          Watched{" "}
+          {new Date(film.watchedDate).toLocaleDateString(undefined, {
+            dateStyle: "medium",
+          })}
+        </div>
+      ) : (
+        <div>No diary entries yet</div>
+      )}
+    </motion.div>
+  );
+}
+
 
 // Custom hook for responsive design
 const useResponsiveLayout = () => {
@@ -30,24 +99,32 @@ const WeatherWidget = () => {
   const isMobile = useResponsiveLayout();
   
   return (
-    <motion.div 
+    <motion.div
       className="info-widget"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 3.5, duration: 1 }}
       style={{
-        position: 'absolute',
-        left: '20px',
-        bottom: isMobile ? '120px' : '50px',
-        color: 'white',
-        textShadow: '0 1px 3px rgba(0,0,0,0.2)',
-        fontSize: isMobile ? '11px' : '14px',
+        position: "absolute",
+        left: "30px",
+        bottom: isMobile ? "120px" : "15px",
+        color: "white",
+        textShadow: "0 1px 3px rgba(0,0,0,0.2)",
+        fontSize: isMobile ? "11px" : "14px",
         opacity: 0.9,
-        zIndex: 10
+        zIndex: 10,
       }}
     >
-      <div>New York, NY • 23°C • Sunny</div>
-      <div style={{ fontSize: isMobile ? '9px' : '12px', marginTop: '5px', opacity: 0.7 }}>Updated 10:30 AM</div>
+      <div>Saarbrücken, Saarland, Germany</div>
+      <div
+        style={{
+          fontSize: isMobile ? "9px" : "12px",
+          marginTop: "5px",
+          opacity: 0.7,
+        }}
+      >
+        Updated 10:30 AM
+      </div>
     </motion.div>
   );
 };
@@ -78,31 +155,6 @@ const SpotifyWidget = () => {
   );
 };
 
-const FilmWidget = () => {
-  const isMobile = useResponsiveLayout();
-  
-  return (
-    <motion.div 
-      className="info-widget"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 3.5, duration: 1 }}
-      style={{
-        position: 'absolute',
-        right: '20px',
-        bottom: isMobile ? '45px' : '20px',
-        color: 'white',
-        textShadow: '0 1px 3px rgba(0,0,0,0.2)',
-        textAlign: 'right',
-        fontSize: isMobile ? '11px' : '14px',
-        opacity: 0.9,
-        zIndex: 10
-      }}
-    >
-      <div>🎬 Last watched: Interstellar</div>
-    </motion.div>
-  );
-};
 
 export default function HomePage({ timerduration }: { timerduration: number }) {
   const { scrollY } = useScroll();
@@ -142,9 +194,9 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           overflow: "hidden",
         }}
       >
-        <video id="myVideo" autoPlay muted loop>
+        {/* <video id="myVideo" autoPlay muted loop>
           <source src="./intro.mp4" type="video/mp4" />
-        </video>
+        </video> */}
         <AuthorHeading
           timerduration={timerduration}
           title={["harshit", "nagpal"]}
@@ -162,8 +214,8 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
           }}
         >
           <WeatherWidget />
-          <SpotifyWidget />
-          <FilmWidget />
+          {/* <SpotifyWidget /> */}
+          <LatestFilm  />
         </div>
       </motion.div>
     </motion.div>

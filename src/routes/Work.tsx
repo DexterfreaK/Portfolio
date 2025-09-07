@@ -516,8 +516,8 @@ function Work() {
             ease: cubicBezier(0.19, 1, 0.22, 1),
           }}
         >
-          {/* Add the gravitational background */}
-          {/* <GravitationalBackground /> */}
+
+          <GravitationalBackground />
 
           <motion.div className="relative">
             <motion.div className="h-[100svh] pt-[10vw]">
