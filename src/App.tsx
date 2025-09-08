@@ -64,7 +64,7 @@ export default function App() {
   // 5) Your original variants (unchanged)
   const loadingVariants = {
     initial: { opacity: 1 },
-    exit: { opacity: 0, transition: { duration: 0.5, delay: 0.3 } },
+    exit: { opacity: 0, transition: { duration: 0.5, delay: 1 } },
   };
 
   const pageVariants = {

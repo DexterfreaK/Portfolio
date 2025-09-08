@@ -302,7 +302,7 @@ export default function HomePage({ timerduration }: { timerduration: number }) {
     <motion.div className="home_container">
       <motion.div
         className="home"
-        animate={{ scale: [1, 1, 0.97], borderRadius: ["0px", "0px", "15px"] }}
+        animate={{ scale: [1, 1, 1], borderRadius: ["0px", "0px", "0px"] }}
         transition={{
           duration: 2,
           delay: timerduration,
