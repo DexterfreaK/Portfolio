@@ -13,6 +13,7 @@ import SlideUpAnimation from "../components/SlideUp";
 import { useState, useEffect } from "react";
 import React from "react";
 import AuthorHeading from "../components/AuthorHeading";
+import TravelGlobe from "../components/TravelGlobe";
 
 type Film = {
   title: string;
@@ -452,8 +453,8 @@ function DCHT() {
 
 function DoubleContactHeading() {
   const { scrollYProgress } = useScroll();
-  const bottomletter = "Get In Touch".split("");
-  const topletter = "Get In Touch".split("");
+  const bottomletter = "Travel Log".split("");
+  const topletter = "Travel Log".split("");
 
   // -- Bottom letters rotate up & come forward (z)
   const rt = (index: number) => [0.5 + index * 0.03, 0.75 + index * 0.03];
@@ -523,7 +524,6 @@ function DoubleContactHeading() {
     <div className="w-full">
       <div className="relative overflow-hidden">
         {/* Main heading container with double text */}
-        <LatestFilm/>
         <div className="flex justify-center items-center leading-[0.55] h-[10rem]">
           <div className="relative" style={{ width: "max-content" }}>
             {/* Top row of letters */}
@@ -839,40 +839,16 @@ function About() {
             </div>
           </div>
         </div>
-        <div className="SomeInfo p-10 font-MonumentGroteskRegular">
-          <SlideUpAnimation staggerChildren={true} staggerDelay={0.1}>
-            <motion.p className="text-lg md:text-xl font-MonumentGrotesk mb-6">
-              Aliqua adipisicing dolor et. Laborum incididunt labore qui
-              excepteur enim sit minim ut. Aliquip incididunt tempor cillum
-              velit et tempor. Amet dolore labore nulla dolore occaecat esse
-              nostrud. Cillum aute proident commodo. Elit dolor nostrud ullamco
-              elit laborum eu sint et deserunt officia elit id. Ut velit eu
-              fugiat excepteur commodo eiusmod quis.
-            </motion.p>
-            <motion.p className="text-base font-MonumentGrotesk mb-6">
-              Aliqua adipisicing dolor et. Laborum incididunt labore qui
-              excepteur enim sit minim ut. Aliquip incididunt tempor cillum
-              velit et tempor. Amet dolore labore nulla dolore occaecat esse
-              nostrud. Cillum aute proident commodo. Elit dolor nostrud ullamco
-              elit laborum eu sint et deserunt officia elit id. Ut velit eu
-              fugiat excepteur commodo eiusmod quis.
-            </motion.p>
-            <motion.p className="text-base font-MonumentGrotesk mb-6">
-              Aliqua adipisicing dolor et. Laborum incididunt labore qui
-              excepteur enim sit minim ut. Aliquip incididunt tempor cillum
-              velit et tempor. Amet dolore labore nulla dolore occaecat esse
-              nostrud. Cillum aute proident commodo. Elit dolor nostrud ullamco
-              elit laborum eu sint et deserunt officia elit id. Ut velit eu
-              fugiat excepteur commodo eiusmod quis.
-            </motion.p>
-            <motion.p className="text-base font-MonumentGrotesk">
-              If you have any exciting projects to talk about, or just want to
-              be friends, feel free to hit me up.
-            </motion.p>
-          </SlideUpAnimation>
-        </div>
+
         {/* Main CONTACT heading */}
         <DoubleContactHeading />
+        {/* GLOBE HERE*/}
+        {/* Full-width globe section */}
+        <div className="w-full">
+          <TravelGlobe />
+        </div>
+
+
         {/* Two contact options */}
         <div className="w-[90vw] max-w-[1200px] flex flex-col md:flex-row mb-20">
           {/* Project option */}

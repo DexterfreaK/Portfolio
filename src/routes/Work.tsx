@@ -517,7 +517,7 @@ function Work() {
           }}
         >
 
-          <GravitationalBackground />
+          {/* <GravitationalBackground /> */}
 
           <motion.div className="relative">
             <motion.div className="h-[100svh] pt-[10vw]">
