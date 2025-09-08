@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import AuthorHeading from "../components/AuthorHeading";
 import TravelGlobe from "../components/TravelGlobe";
+import { ImageTrail } from "../components/ImageTrail";
 
 type Film = {
   title: string;
@@ -818,26 +819,30 @@ function About() {
           </div>
 
           {/* Image Column */}
-          <div className="w-full md:w-5/12 mb-10 md:mb-0 md:pl-10">
-            <div className="relative">
-              <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
-                ME
+      
+            <div className="w-full md:w-5/12 mb-10 md:mb-0 md:pl-10">
+                <ImageTrail>
+              <div className="relative">
+                <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
+                  ME
+                </div>
+                <motion.div
+                  className="w-full aspect-[3/4] bg-gray-300 overflow-hidden"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1 }}
+                >
+                  {/* Replace placeholder with actual image */}
+                  <img
+                    src="/profile.jpg"
+                    alt="Harshit Nagpal"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
               </div>
-              <motion.div
-                className="w-full aspect-[3/4] bg-gray-300 overflow-hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
-              >
-                {/* Replace placeholder with actual image */}
-                <img
-                  src="/profile.jpg"
-                  alt="Harshit Nagpal"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
+              </ImageTrail>
             </div>
-          </div>
+
         </div>
 
         {/* Main CONTACT heading */}
@@ -847,7 +852,6 @@ function About() {
         <div className="w-full">
           <TravelGlobe />
         </div>
-
 
         {/* Two contact options */}
         <div className="w-[90vw] max-w-[1200px] flex flex-col md:flex-row mb-20">
