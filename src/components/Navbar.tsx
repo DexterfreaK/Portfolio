@@ -53,7 +53,7 @@ export default function Navbar({
   }, [location.pathname, setNavbarCurrentState]);
 
   return (
-    <header className="fixed bottom-[2rem] z-[1000] w-[100%] flex justify-center">
+    <header className="fixed bottom-[2rem] z-[1000] left-1/2 -translate-x-1/2">
       <motion.div
         className="relative bg-black/40 w-[15em] rounded-lg backdrop-blur-md"
         initial={{
