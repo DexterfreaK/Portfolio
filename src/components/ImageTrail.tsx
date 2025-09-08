@@ -1,4 +1,4 @@
-import { useState, useRef, ReactNode } from "react";
+import { useState, useRef, ReactNode, useEffect } from "react"; // Import useEffect
 import { motion, AnimatePresence } from "framer-motion";
 
 // Type for the image objects in the trail effect
@@ -11,7 +11,7 @@ type TrailImage = {
   endRotation: number;
 };
 
-// Your array of images
+//  Your array of images
 const trailImages: string[] = [
   "/fun-times/1.jpg",
   "/fun-times/2.jpg",
@@ -54,6 +54,7 @@ const trailImages: string[] = [
     "/fun-times/39.jpg",
 ];
 
+
 interface ImageTrailProps {
   children: ReactNode;
 }
@@ -62,10 +63,18 @@ export const ImageTrail: React.FC<ImageTrailProps> = ({ children }) => {
   const [images, setImages] = useState<TrailImage[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isThrottled = useRef<boolean>(false);
-  // MODIFICATION: Add a ref to store the src of the last shown image.
   const lastImageSrc = useRef<string | null>(null);
 
+  // MODIFICATION: Preload all images when the component mounts.
+  useEffect(() => {
+    trailImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []); // The empty dependency array ensures this runs only once.
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // This function remains the same as before
     if (isThrottled.current || !containerRef.current) return;
 
     isThrottled.current = true;
@@ -77,24 +86,20 @@ export const ImageTrail: React.FC<ImageTrailProps> = ({ children }) => {
     const cursorX = e.clientX - rect.left;
     const cursorY = e.clientY - rect.top;
 
-    // MODIFICATION: Logic to select a new, unique image source.
     let newSrc: string;
-    // Handle the edge case of having 1 or 0 images.
     if (trailImages.length <= 1) {
       newSrc = trailImages[0] || "";
     } else {
-      // Loop until we find an image that's different from the last one.
       do {
         newSrc = trailImages[Math.floor(Math.random() * trailImages.length)];
       } while (newSrc === lastImageSrc.current);
     }
 
-    // Update the ref with the new source for the next mouse move.
     lastImageSrc.current = newSrc;
 
     const newImage: TrailImage = {
       id: Date.now(),
-      src: newSrc, // Use the new, guaranteed-to-be-different source
+      src: newSrc,
       x: cursorX,
       y: cursorY,
       startRotation: Math.random() * 40 - 20,
@@ -110,6 +115,7 @@ export const ImageTrail: React.FC<ImageTrailProps> = ({ children }) => {
 
   return (
     <div ref={containerRef} onMouseMove={handleMouseMove} className="relative">
+      {/* ... The rest of the component is the same ... */}
       {children}
       <AnimatePresence>
         {images.map((img) => (
@@ -124,14 +130,8 @@ export const ImageTrail: React.FC<ImageTrailProps> = ({ children }) => {
               translateX: "-50%",
               translateY: "-50%",
             }}
-            initial={{
-              scale: 0,
-              rotate: img.startRotation,
-            }}
-            animate={{
-              scale: 1.1,
-              rotate: img.endRotation,
-            }}
+            initial={{ scale: 0, rotate: img.startRotation }}
+            animate={{ scale: 1.1, rotate: img.endRotation }}
             exit={{
               scale: 0,
               rotate: img.startRotation,
